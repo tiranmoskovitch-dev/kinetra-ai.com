@@ -1,0 +1,703 @@
+/*
+ * Kinetra AI — Component Library
+ * Version: 1.0 | Design: C16 Autonomous Operations
+ * Requires: brand.css (tokens + reset + utilities)
+ *
+ * Components:
+ *   1.  Nav
+ *   2.  Buttons
+ *   3.  Badges & Pills
+ *   4.  Hero (page hero)
+ *   5.  Stat Strip
+ *   6.  Service Cards
+ *   7.  Price Cards
+ *   8.  Deliverables Grid
+ *   9.  Timeline
+ *   10. Fit Check
+ *   11. Process Steps
+ *   12. CTA Section
+ *   13. Dashboard Mockup
+ *   14. Architecture SVG
+ *   15. Footer
+ */
+
+/* ══════════════════════════════════════════════════════════
+   1. NAV — Sticky frosted
+   ══════════════════════════════════════════════════════════ */
+.kn-nav {
+  position: sticky; top: 0; z-index: 100;
+  height: 68px;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 72px;
+  background: rgba(9, 13, 24, 0.92);
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(20px) saturate(1.5);
+}
+.kn-nav-logo { display: flex; align-items: center; }
+.kn-nav-logo img { height: 42px; width: auto; }
+.kn-nav-links { display: flex; gap: 40px; list-style: none; }
+.kn-nav-links a {
+  font-size: 13.5px; font-weight: 500;
+  color: var(--muted); transition: color 0.15s;
+}
+.kn-nav-links a:hover,
+.kn-nav-links a.active { color: var(--text); }
+
+/* ── Sub-nav bar (service page sticky links) ──────────── */
+.kn-subnav {
+  position: sticky; top: 68px; z-index: 90;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  overflow-x: auto; white-space: nowrap;
+}
+.kn-subnav-inner {
+  display: flex;
+  padding: 0 40px;
+  max-width: 1140px; margin: 0 auto;
+}
+.kn-subnav-link {
+  display: inline-block;
+  padding: 16px 20px;
+  font-size: 12.5px; font-weight: 500;
+  color: var(--dim);
+  border-bottom: 2px solid transparent;
+  transition: color 0.15s, border-color 0.15s;
+  white-space: nowrap;
+}
+.kn-subnav-link:hover { color: var(--muted); }
+.kn-subnav-link.active { color: var(--violet-lt); border-bottom-color: var(--violet); }
+
+@media (max-width: 900px) {
+  .kn-nav { padding: 0 24px; }
+  .kn-nav-links { display: none; }
+}
+
+
+/* ══════════════════════════════════════════════════════════
+   2. BUTTONS
+   ══════════════════════════════════════════════════════════ */
+
+/* Primary — gradient fill */
+.btn-primary {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: var(--grad);
+  color: #fff; font-family: var(--font-ui);
+  font-weight: 700; font-size: 14px;
+  padding: 12px 28px; border: none;
+  border-radius: var(--radius);
+  cursor: pointer; white-space: nowrap;
+  transition: opacity 0.15s, transform 0.15s;
+}
+.btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
+
+/* Nav CTA — slightly smaller */
+.btn-nav {
+  background: var(--grad);
+  color: #fff; font-weight: 700; font-size: 13px;
+  padding: 9px 22px; border: none;
+  border-radius: var(--radius); cursor: pointer;
+  transition: opacity 0.15s, transform 0.15s;
+  letter-spacing: 0.01em;
+}
+.btn-nav:hover { opacity: 0.88; transform: translateY(-1px); }
+
+/* Secondary — outlined */
+.btn-secondary {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: transparent;
+  border: 1px solid var(--border-2);
+  color: var(--muted); font-family: var(--font-ui);
+  font-weight: 500; font-size: 14px;
+  padding: 12px 28px; border-radius: var(--radius);
+  cursor: pointer; white-space: nowrap;
+  transition: border-color 0.15s, color 0.15s, transform 0.15s;
+}
+.btn-secondary:hover {
+  border-color: var(--violet-br);
+  color: var(--text);
+  transform: translateY(-1px);
+}
+
+/* Ghost — no border */
+.btn-ghost {
+  background: transparent; border: none;
+  color: var(--muted); font-family: var(--font-ui);
+  font-weight: 500; font-size: 14px;
+  padding: 10px 16px; cursor: pointer;
+  transition: color 0.15s;
+}
+.btn-ghost:hover { color: var(--text); }
+
+/* Danger */
+.btn-danger {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: var(--error-dim);
+  border: 1px solid var(--error-br);
+  color: var(--error); font-family: var(--font-ui);
+  font-weight: 600; font-size: 13px;
+  padding: 10px 20px; border-radius: var(--radius);
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+.btn-danger:hover { opacity: 0.82; }
+
+/* Full-width variant */
+.btn-full { display: flex; width: 100%; justify-content: center; }
+
+
+/* ══════════════════════════════════════════════════════════
+   3. BADGES & PILLS
+   ══════════════════════════════════════════════════════════ */
+
+/* Hero pill (above H1) */
+.kn-pill {
+  display: inline-flex; align-items: center; gap: 7px;
+  border: 1px solid var(--violet-br);
+  background: var(--violet-dim);
+  border-radius: 20px; padding: 6px 16px;
+  font-size: 11.5px; font-weight: 500;
+  color: var(--violet-lt); letter-spacing: 0.05em;
+}
+.kn-pill-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--violet);
+  animation: brand-blink 2s ease-in-out infinite;
+  flex-shrink: 0;
+}
+
+/* Category badge (service cards) */
+.kn-badge {
+  display: inline-flex; align-items: center;
+  background: var(--violet-dim);
+  border: 1px solid var(--violet-br);
+  border-radius: var(--radius-sm);
+  padding: 4px 10px;
+  font-size: 10.5px; font-weight: 600;
+  color: var(--violet-lt);
+  letter-spacing: 0.09em; text-transform: uppercase;
+}
+
+/* Status badges */
+.badge {
+  display: inline-flex; align-items: center; gap: 5px;
+  border-radius: var(--radius-sm);
+  padding: 3px 8px;
+  font-size: 11px; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.08em;
+}
+.badge-live    { background: var(--violet-dim); color: var(--violet-lt); border: 1px solid var(--violet-br); }
+.badge-warning { background: var(--warning-dim); color: var(--warning);   border: 1px solid var(--warning-br); }
+.badge-error   { background: var(--error-dim);   color: var(--error);     border: 1px solid var(--error-br); }
+.badge-neutral { background: var(--surface);     color: var(--dim);       border: 1px solid var(--border); }
+
+
+/* ══════════════════════════════════════════════════════════
+   4. HERO — Page hero (full homepage hero is a variant)
+   ══════════════════════════════════════════════════════════ */
+.kn-page-hero {
+  padding: 88px 0 72px;
+  border-bottom: 1px solid var(--border);
+  position: relative; overflow: hidden;
+}
+.kn-page-hero::before {
+  content: '';
+  position: absolute; pointer-events: none;
+  width: 600px; height: 600px;
+  top: -200px; right: -100px;
+  background: radial-gradient(circle, rgba(99,102,241,0.07) 0%, transparent 65%);
+}
+.kn-page-hero::after {
+  content: '';
+  position: absolute; pointer-events: none;
+  width: 500px; height: 500px;
+  bottom: -200px; left: 0;
+  background: radial-gradient(circle, rgba(139,92,246,0.05) 0%, transparent 65%);
+}
+.kn-page-hero .wrap { position: relative; }
+.kn-page-hero h1 {
+  font-size: 54px; font-weight: 800;
+  letter-spacing: -0.025em; line-height: 1.08;
+  margin: 22px 0;
+}
+.kn-page-hero .kn-hero-sub {
+  font-size: 17px; color: var(--muted);
+  max-width: 540px; line-height: 1.65;
+}
+
+@media (max-width: 900px) {
+  .kn-page-hero { padding: 56px 0 40px; }
+  .kn-page-hero h1 { font-size: 32px; }
+}
+
+
+/* ══════════════════════════════════════════════════════════
+   5. STAT STRIP — 4-col metric row
+   ══════════════════════════════════════════════════════════ */
+.kn-stats {
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 56px 0;
+}
+.kn-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+}
+.kn-stat {
+  padding: 0 40px;
+  border-right: 1px solid var(--border);
+}
+.kn-stat:first-child { padding-left: 0; }
+.kn-stat:last-child  { border-right: none; }
+.kn-stat-num {
+  font-family: var(--font-mono);
+  font-size: 42px; font-weight: 600;
+  letter-spacing: -0.02em;
+  margin-bottom: 4px;
+}
+.kn-stat-label {
+  font-size: 11px; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.1em;
+  color: var(--dim);
+}
+.kn-stat-under {
+  width: 28px; height: 2px;
+  background: var(--grad);
+  border-radius: 1px; margin-bottom: 14px;
+}
+
+@media (max-width: 900px) {
+  .kn-stats-grid { grid-template-columns: 1fr 1fr; }
+  .kn-stat { padding: 20px; border: none; border-bottom: 1px solid var(--border); }
+}
+
+
+/* ══════════════════════════════════════════════════════════
+   6. SERVICE CARDS — 3-col grid on homepage
+   ══════════════════════════════════════════════════════════ */
+.kn-svc-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+.kn-svc {
+  padding: 32px;
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  position: relative;
+  transition: background 0.2s;
+  overflow: hidden;
+}
+.kn-svc::after {
+  content: '';
+  position: absolute; bottom: 0; left: 0; right: 0;
+  height: 0;
+  background: var(--grad);
+  opacity: 0.06;
+  transition: height 0.3s cubic-bezier(.22,1,.36,1);
+}
+.kn-svc:hover { background: var(--surface-2); }
+.kn-svc:hover::after { height: 100%; }
+.kn-svc:nth-child(3n) { border-right: none; }
+.kn-svc:nth-child(4), .kn-svc:nth-child(5), .kn-svc:nth-child(6) { border-bottom: none; }
+
+.kn-svc-cat {
+  font-size: 10.5px; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.1em;
+  color: var(--violet); margin-bottom: 12px;
+}
+.kn-svc-name {
+  font-size: 19px; font-weight: 700;
+  color: var(--text); margin-bottom: 12px;
+}
+.kn-svc-desc {
+  font-size: 13px; color: var(--muted);
+  line-height: 1.72; margin-bottom: 28px;
+}
+.kn-svc-metric {
+  font-family: var(--font-mono);
+  font-size: 28px; font-weight: 600;
+  letter-spacing: -0.02em;
+}
+.kn-svc-metric-label {
+  font-size: 10.5px; color: var(--dim);
+  text-transform: uppercase; letter-spacing: 0.08em; margin-top: 4px;
+}
+
+@media (max-width: 900px) {
+  .kn-svc-grid { grid-template-columns: 1fr; }
+  .kn-svc { border-right: none; }
+  .kn-svc:nth-child(3n) { border-right: none; }
+  .kn-svc:nth-child(4), .kn-svc:nth-child(5) { border-bottom: 1px solid var(--border); }
+  .kn-svc:last-child { border-bottom: none; }
+}
+
+
+/* ══════════════════════════════════════════════════════════
+   7. PRICE CARDS — Service page pricing
+   ══════════════════════════════════════════════════════════ */
+.kn-price-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+.kn-price-card.featured {
+  border-color: var(--violet-br);
+  box-shadow: 0 0 0 1px rgba(139,92,246,0.1);
+}
+.kn-price-head {
+  padding: 24px 24px 20px;
+  border-bottom: 1px solid var(--border);
+}
+.kn-price-tier {
+  font-size: 10.5px; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.09em;
+  color: var(--dim); margin-bottom: 10px;
+}
+.kn-price-card.featured .kn-price-tier { color: var(--violet-lt); }
+.kn-price-label {
+  font-family: var(--font-mono);
+  font-size: 26px; font-weight: 700;
+  letter-spacing: -0.02em; color: var(--text);
+  margin-bottom: 6px;
+}
+.kn-price-note { font-size: 12px; color: var(--dim); line-height: 1.5; }
+.kn-price-body { padding: 20px 24px 24px; }
+.kn-price-row {
+  display: flex; align-items: flex-start; gap: 10px;
+  font-size: 13px; color: var(--muted); line-height: 1.5;
+  padding: 7px 0;
+  border-bottom: 1px solid rgba(28,35,51,0.6);
+}
+.kn-price-row:last-of-type { border-bottom: none; }
+.kn-price-icon {
+  width: 16px; height: 16px; flex-shrink: 0; margin-top: 1px;
+  color: var(--violet);
+}
+.kn-price-cta {
+  display: block; width: 100%; text-align: center;
+  margin-top: 20px; padding: 11px;
+  border-radius: var(--radius-md);
+  font-size: 13.5px; font-weight: 700;
+  cursor: pointer; transition: opacity 0.15s, transform 0.15s;
+}
+.kn-price-cta:hover { opacity: 0.88; transform: translateY(-1px); }
+.kn-price-cta-primary { background: var(--grad); color: #fff; border: none; }
+.kn-price-cta-outline  { background: transparent; border: 1px solid var(--border-2); color: var(--muted); }
+
+
+/* ══════════════════════════════════════════════════════════
+   8. DELIVERABLES GRID — 3-col numbered items
+   ══════════════════════════════════════════════════════════ */
+.kn-deliv-wrap {
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  padding: 48px 0;
+}
+.kn-deliv-inner {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 56px; align-items: start;
+}
+.kn-deliv-label {
+  font-size: 11px; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.1em;
+  color: var(--dim); padding-top: 2px;
+}
+.kn-deliv-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+.kn-deliv-item {
+  background: var(--surface-2);
+  padding: 22px 24px;
+}
+.kn-deliv-num {
+  font-family: var(--font-mono);
+  font-size: 11px; font-weight: 600;
+  color: var(--violet); margin-bottom: 8px;
+}
+.kn-deliv-title {
+  font-size: 13.5px; font-weight: 600;
+  color: var(--text); margin-bottom: 5px;
+}
+.kn-deliv-desc { font-size: 12px; color: var(--dim); line-height: 1.55; }
+
+@media (max-width: 900px) {
+  .kn-deliv-inner { grid-template-columns: 1fr; gap: 20px; }
+  .kn-deliv-grid  { grid-template-columns: 1fr 1fr; }
+}
+
+
+/* ══════════════════════════════════════════════════════════
+   9. TIMELINE — Horizontal phase strip
+   ══════════════════════════════════════════════════════════ */
+.kn-timeline-wrap {
+  border-top: 1px solid var(--border);
+  padding: 40px 0 56px;
+}
+.kn-timeline {
+  display: flex;
+  align-items: flex-start;
+  gap: 0;
+}
+.kn-tl-phase {
+  flex: 1; position: relative;
+}
+.kn-tl-phase:not(:last-child)::after {
+  content: '';
+  position: absolute; right: 0; top: 18px;
+  width: calc(100% - 120px); height: 1px;
+  background: linear-gradient(90deg, var(--border-2) 0%, transparent 100%);
+}
+.kn-tl-num {
+  font-family: var(--font-mono);
+  font-size: 11px; font-weight: 600; color: var(--violet);
+  margin-bottom: 8px;
+}
+.kn-tl-title { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+.kn-tl-range {
+  font-family: var(--font-mono);
+  font-size: 11.5px; color: var(--dim); margin-bottom: 8px;
+}
+.kn-tl-desc { font-size: 12px; color: var(--muted); line-height: 1.55; max-width: 160px; }
+
+/* Process steps variant (horizontal, numbered circles) */
+.kn-process-row {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0;
+  position: relative;
+}
+.kn-process-row::before {
+  content: '';
+  position: absolute; top: 14px; left: 10%; right: 10%; height: 1px;
+  background: var(--border);
+  z-index: 0;
+}
+.kn-step { text-align: center; position: relative; z-index: 1; }
+.kn-step-num {
+  width: 28px; height: 28px; border-radius: 50%;
+  background: var(--violet-dim); border: 1px solid var(--violet-br);
+  font-family: var(--font-mono); font-size: 12px; font-weight: 600; color: var(--violet);
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 14px;
+}
+.kn-step-tag {
+  font-size: 10px; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 0.1em; color: var(--dim); margin-bottom: 6px;
+}
+.kn-step-title { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 8px; }
+.kn-step-desc  { font-size: 12px; color: var(--muted); line-height: 1.55; }
+
+@media (max-width: 900px) {
+  .kn-timeline  { flex-direction: column; gap: 24px; }
+  .kn-tl-phase::after { display: none; }
+  .kn-process-row { grid-template-columns: 1fr 1fr; gap: 24px; }
+  .kn-process-row::before { display: none; }
+}
+
+
+/* ══════════════════════════════════════════════════════════
+   10. FIT CHECK — Good fit / Not a fit columns
+   ══════════════════════════════════════════════════════════ */
+.kn-fit-wrap {
+  border-top: 1px solid var(--border);
+  padding: 36px 0 56px;
+}
+.kn-fit-grid {
+  display: grid;
+  grid-template-columns: 200px 1fr 1fr;
+  gap: 56px 40px; align-items: start;
+}
+.kn-fit-list { display: flex; flex-direction: column; gap: 8px; }
+.kn-fit-item {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 13.5px; color: var(--muted);
+}
+.kn-fit-dot-yes { width: 7px; height: 7px; border-radius: 50%; background: var(--violet);   flex-shrink: 0; }
+.kn-fit-dot-no  { width: 7px; height: 7px; border-radius: 50%; background: var(--border-2); flex-shrink: 0; }
+.kn-fit-col-label {
+  font-size: 11px; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 0.1em; color: var(--dim); margin-bottom: 14px;
+}
+
+@media (max-width: 900px) {
+  .kn-fit-grid { grid-template-columns: 1fr 1fr; }
+}
+
+
+/* ══════════════════════════════════════════════════════════
+   11. CTA SECTION — Bottom page call to action
+   ══════════════════════════════════════════════════════════ */
+.kn-cta {
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 88px 0;
+  text-align: center;
+}
+.kn-cta h2 {
+  font-size: 40px; font-weight: 800;
+  letter-spacing: -0.022em; margin-bottom: 16px;
+}
+.kn-cta p {
+  font-size: 17px; color: var(--muted);
+  margin-bottom: 36px; max-width: 480px; margin-left: auto; margin-right: auto;
+  line-height: 1.6;
+}
+.kn-cta-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+
+
+/* ══════════════════════════════════════════════════════════
+   12. DASHBOARD MOCKUP — Hero illustration widget
+   ══════════════════════════════════════════════════════════ */
+.kn-dash {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden; font-size: 12px;
+}
+.kn-dash-header {
+  background: var(--surface-deep);
+  border-bottom: 1px solid var(--border);
+  padding: 10px 16px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.kn-dash-title { font-size: 13px; font-weight: 500; color: var(--text); }
+.kn-dash-live  { display: flex; align-items: center; gap: 6px; font-size: 10.5px; font-weight: 600; color: var(--violet-lt); text-transform: uppercase; letter-spacing: 0.08em; }
+.kn-dash-body  { padding: 16px; }
+.kn-kpi-grid   { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 16px; }
+.kn-kpi {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 14px;
+}
+.kn-kpi-val {
+  font-family: var(--font-mono);
+  font-size: 24px; font-weight: 600; color: var(--text);
+  letter-spacing: -0.02em; margin-bottom: 2px;
+}
+.kn-kpi-delta { font-size: 12px; color: var(--violet); margin-bottom: 4px; }
+.kn-kpi-label { font-size: 10px; color: var(--dim); text-transform: uppercase; letter-spacing: 0.08em; }
+.kn-log-row {
+  display: flex; align-items: center; gap: 10px;
+  padding: 5px 0; border-bottom: 1px solid rgba(28,35,51,0.5);
+  font-family: var(--font-mono); font-size: 10.5px; color: var(--muted);
+}
+.kn-log-row:last-child { border-bottom: none; }
+.kn-log-time { color: var(--dim); flex-shrink: 0; }
+
+
+/* ══════════════════════════════════════════════════════════
+   13. ARCHITECTURE SVG SECTION
+   ══════════════════════════════════════════════════════════ */
+.kn-arch-section { padding: 80px 0 0; }
+.kn-arch-wrap {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden; padding: 8px;
+}
+.kn-arch-svg { width: 100%; height: auto; display: block; }
+
+/* Connection lines */
+.conn-l, .conn-r {
+  fill: none; stroke-width: 1.5;
+  stroke-dasharray: 600; stroke-dashoffset: 600;
+}
+.kn-arch-svg.go .conn-l,
+.kn-arch-svg.go .conn-r {
+  animation: kn-draw 1s cubic-bezier(.22,1,.36,1) forwards;
+}
+@keyframes kn-draw { to { stroke-dashoffset: 0; } }
+.kn-arch-svg.go .cl1 { animation-delay: 0.0s; }
+.kn-arch-svg.go .cl2 { animation-delay: 0.1s; }
+.kn-arch-svg.go .cl3 { animation-delay: 0.2s; }
+.kn-arch-svg.go .cl4 { animation-delay: 0.3s; }
+.kn-arch-svg.go .cl5 { animation-delay: 0.4s; }
+.kn-arch-svg.go .cr1 { animation-delay: 0.7s; }
+.kn-arch-svg.go .cr2 { animation-delay: 0.8s; }
+.kn-arch-svg.go .cr3 { animation-delay: 0.9s; }
+.kn-arch-svg.go .cr4 { animation-delay: 1.0s; }
+.kn-arch-svg.go .cr5 { animation-delay: 1.1s; }
+
+/* Hub pulse rings */
+.kn-hub-ring { transform-origin: 600px 210px; }
+.kn-arch-svg.go .kn-hub-ring-1 { animation: kn-ring 3.5s ease-out 0.5s infinite; }
+.kn-arch-svg.go .kn-hub-ring-2 { animation: kn-ring 3.5s ease-out 1.5s infinite; }
+.kn-arch-svg.go .kn-hub-ring-3 { animation: kn-ring 3.5s ease-out 2.5s infinite; }
+@keyframes kn-ring {
+  0%   { transform: scale(0.85); opacity: 0.5; }
+  100% { transform: scale(1.5);  opacity: 0; }
+}
+
+/* Data packets */
+.kn-pkt { opacity: 0; }
+.kn-arch-svg.go .kn-pkt { animation: kn-pkt-fade 0.3s ease-out 1.6s forwards; }
+@keyframes kn-pkt-fade { to { opacity: 1; } }
+
+
+/* ══════════════════════════════════════════════════════════
+   14. FOOTER
+   ══════════════════════════════════════════════════════════ */
+.kn-footer {
+  border-top: 1px solid var(--border);
+  padding: 32px 40px;
+  max-width: 1140px; margin: 0 auto;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.kn-footer-left { display: flex; align-items: center; gap: 14px; }
+.kn-footer-left img { height: 24px; width: auto; opacity: 0.7; }
+.kn-footer-left span,
+.kn-footer-right { font-size: 12.5px; color: var(--dim); }
+
+@media (max-width: 900px) {
+  .kn-footer { flex-direction: column; gap: 16px; text-align: center; }
+}
+
+
+/* ══════════════════════════════════════════════════════════
+   15. DASHBOARD SIDEBAR (Client dashboards / white-label)
+   ══════════════════════════════════════════════════════════ */
+.kn-sidebar {
+  width: 200px; flex-shrink: 0;
+  background: var(--surface-deep);
+  border-right: 1px solid var(--border);
+  display: flex; flex-direction: column;
+  height: 100vh; position: fixed; left: 0; top: 0;
+}
+.kn-sidebar-logo {
+  padding: 20px 16px;
+  border-bottom: 1px solid var(--border);
+}
+.kn-sidebar-logo img { height: 28px; }
+.kn-sidebar-nav { padding: 12px 0; flex: 1; }
+.kn-sidebar-link {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 16px;
+  font-size: 13.5px; font-weight: 500; color: var(--muted);
+  transition: color 0.15s, background 0.15s;
+  border-left: 2px solid transparent;
+}
+.kn-sidebar-link:hover { color: var(--text); background: var(--violet-dim); }
+.kn-sidebar-link.active {
+  color: var(--violet-lt);
+  background: var(--violet-dim);
+  border-left-color: var(--violet);
+}
+.kn-sidebar-footer {
+  padding: 16px;
+  border-top: 1px solid var(--border);
+  font-size: 11px; color: var(--dim);
+}
