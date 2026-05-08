@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Services — Kinetra AI</title>
+<meta name="description" content="Six AI consulting services. Fixed scope, fixed price, deployed in 30 days. Built for property management, law firms, and professional services.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+
+/* ── RESET ──────────────────────────────────────────────── */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body {
+  background: #090D18;
+  color: #E8EEFF;
+  font-family: 'Inter', system-ui, sans-serif;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+a { text-decoration: none; color: inherit; }
+button { cursor: pointer; font-family: inherit; }
+img { display: block; }
+
+/* ── TOKENS ─────────────────────────────────────────────── */
+:root {
+  --bg:         #090D18;
+  --surface:    #10141F;
+  --surface-2:  #141926;
+  --border:     #1C2333;
+  --border-2:   #2A3347;
+  --text:       #E8EEFF;
+  --muted:      #8892AA;
+  --dim:        #4E5A72;
+  --violet:     #8B5CF6;
+  --indigo:     #6366F1;
+  --violet-lt:  #A78BFA;
+  --violet-dim: rgba(139,92,246,0.08);
+  --violet-br:  rgba(139,92,246,0.22);
+  --grad:       linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%);
+}
+
+/* ── SCROLL REVEAL ──────────────────────────────────────── */
+.r {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.7s cubic-bezier(.22,1,.36,1), transform 0.7s cubic-bezier(.22,1,.36,1);
+}
+.r.in { opacity: 1; transform: none; }
+.d1 { transition-delay: 0.06s; }
+.d2 { transition-delay: 0.12s; }
+.d3 { transition-delay: 0.18s; }
+.d4 { transition-delay: 0.24s; }
+.d5 { transition-delay: 0.30s; }
+
+/* ── NAV ────────────────────────────────────────────────── */
+nav {
+  position: sticky; top: 0; z-index: 100;
+  height: 68px;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 72px;
+  background: rgba(9,13,24,0.92);
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(20px) saturate(1.5);
+}
+.logo { display: flex; align-items: center; }
+.logo img { height: 42px; width: auto; }
+.nav-links { display: flex; gap: 40px; list-style: none; }
+.nav-links a {
+  font-size: 13.5px; font-weight: 500;
+  color: var(--muted); transition: color 0.15s;
+}
+.nav-links a:hover, .nav-links a.active { color: var(--text); }
+.nav-btn {
+  background: var(--grad);
+  color: #fff; font-weight: 700; font-size: 13px;
+  padding: 9px 22px; border: none; border-radius: 6px;
+  transition: opacity 0.15s, transform 0.15s;
+  letter-spacing: 0.01em;
+}
+.nav-btn:hover { opacity: 0.88; transform: translateY(-1px); }
+
+/* ── UTILITIES ──────────────────────────────────────────── */
+.wrap { max-width: 1140px; margin: 0 auto; padding: 0 40px; }
+.grad-text {
+  background: var(--grad);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.eyebrow {
+  font-size: 11px; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.12em;
+  color: var(--violet); margin-bottom: 16px;
+}
+.pill {
+  display: inline-flex; align-items: center; gap: 6px;
+  border: 1px solid var(--violet-br);
+  background: var(--violet-dim);
+  border-radius: 20px; padding: 5px 14px;
+  font-size: 11.5px; font-weight: 500;
+  color: var(--violet-lt); letter-spacing: 0.04em;
+}
+.pill-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--violet);
+  animation: blink 2s ease-in-out infinite;
+}
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+/* ── PAGE HERO ──────────────────────────────────────────── */
+.page-hero {
+  padding: 88px 0 72px;
+  border-bottom: 1px solid var(--border);
+  position: relative; overflow: hidden;
+}
+.page-hero::before {
+  content: '';
+  position: absolute; pointer-events: none;
+  width: 600px; height: 600px;
+  top: -200px; right: -100px;
+  background: radial-gradient(circle, rgba(99,102,241,0.07) 0%, transparent 65%);
+}
+.page-hero::after {
+  content: '';
+  position: absolute; pointer-events: none;
+  width: 500px; height: 500px;
+  bottom: -200px; left: 0;
+  background: radial-gradient(circle, rgba(139,92,246,0.05) 0%, transparent 65%);
+}
+.page-hero .wrap { position: relative; }
+.page-hero h1 {
+  font-size: 54px; font-weight: 800; line-height: 1.08;
+  letter-spacing: -0.025em; margin-bottom: 22px; margin-top: 22px;
+}
+.page-hero .sub {
+  font-size: 17px; color: var(--muted); max-width: 540px; line-height: 1.65;
+}
+
+/* ── SERVICE NAV BAR ────────────────────────────────────── */
+.svc-nav {
+  position: sticky; top: 68px; z-index: 90;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  overflow-x: auto; white-space: nowrap;
+}
+.svc-nav-inner {
+  display: flex; align-items: center; gap: 0;
+  padding: 0 40px; max-width: 1140px; margin: 0 auto;
+}
+.svc-nav-link {
+  display: inline-block;
+  padding: 16px 20px;
+  font-size: 12.5px; font-weight: 500;
+  color: var(--dim);
+  border-bottom: 2px solid transparent;
+  transition: color 0.15s, border-color 0.15s;
+  white-space: nowrap;
+}
+.svc-nav-link:hover { color: var(--muted); }
+.svc-nav-link.active { color: var(--violet-lt); border-bottom-color: var(--violet); }
+
+/* ── SERVICE SECTION ────────────────────────────────────── */
+.svc-section {
+  padding: 80px 0 0;
+  border-bottom: 1px solid var(--border);
+}
+.svc-section:last-of-type { border-bottom: none; }
+.svc-header {
+  display: grid; grid-template-columns: 1fr 360px;
+  gap: 64px; align-items: start;
+  padding-bottom: 56px;
+}
+.svc-cat-badge {
+  display: inline-flex; align-items: center;
+  background: var(--violet-dim); border: 1px solid var(--violet-br);
+  border-radius: 4px; padding: 4px 10px;
+  font-size: 10.5px; font-weight: 600;
+  color: var(--violet-lt); letter-spacing: 0.09em; text-transform: uppercase;
+  margin-bottom: 18px;
+}
+.svc-section h2 {
+  font-size: 36px; font-weight: 800;
+  letter-spacing: -0.02em; line-height: 1.1;
+  margin-bottom: 20px;
+}
+.svc-lead {
+  font-size: 16px; color: var(--muted); line-height: 1.72; max-width: 560px;
+}
+
+/* Pricing card */
+.price-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+  top: 0;
+}
+.price-card.featured {
+  border-color: var(--violet-br);
+  box-shadow: 0 0 0 1px rgba(139,92,246,0.1);
+}
+.price-card-head {
+  padding: 24px 24px 20px;
+  border-bottom: 1px solid var(--border);
+}
+.price-tier {
+  font-size: 10.5px; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.09em;
+  color: var(--dim); margin-bottom: 10px;
+}
+.price-card.featured .price-tier { color: var(--violet-lt); }
+.price-label {
+  font-size: 28px; font-weight: 800;
+  letter-spacing: -0.02em; color: var(--text);
+  font-family: 'JetBrains Mono', monospace;
+  margin-bottom: 6px;
+}
+.price-note {
+  font-size: 12px; color: var(--dim); line-height: 1.5;
+}
+.price-card-body { padding: 20px 24px 24px; }
+.price-feature {
+  display: flex; align-items: flex-start; gap: 10px;
+  font-size: 13px; color: var(--muted); line-height: 1.5;
+  padding: 7px 0; border-bottom: 1px solid rgba(28,35,51,0.6);
+}
+.price-feature:last-child { border-bottom: none; }
+.pf-icon {
+  width: 16px; height: 16px; flex-shrink: 0; margin-top: 1px;
+  color: var(--violet);
+}
+.price-cta {
+  display: block; width: 100%; text-align: center;
+  margin-top: 20px; padding: 11px;
+  border-radius: 7px; font-size: 13.5px; font-weight: 700;
+  transition: opacity 0.15s, transform 0.15s;
+}
+.price-cta-primary {
+  background: var(--grad); color: #fff;
+  border: none;
+}
+.price-cta-outline {
+  background: transparent;
+  border: 1px solid var(--border-2);
+  color: var(--muted);
+}
+.price-cta:hover { opacity: 0.88; transform: translateY(-1px); }
+
+/* ── DELIVERABLES GRID ──────────────────────────────────── */
+.deliv-wrap {
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  padding: 48px 0;
+}
+.deliv-inner { display: grid; grid-template-columns: 200px 1fr; gap: 56px; align-items: start; }
+.deliv-label {
+  font-size: 11px; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 0.1em; color: var(--dim); padding-top: 2px;
+}
+.deliv-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border-radius: 8px; overflow: hidden; }
+.deliv-item {
+  background: var(--surface-2);
+  padding: 22px 24px;
+}
+.deliv-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px; font-weight: 600;
+  color: var(--violet); margin-bottom: 8px;
+}
+.deliv-title { font-size: 13.5px; font-weight: 600; color: var(--text); margin-bottom: 5px; }
+.deliv-desc { font-size: 12px; color: var(--dim); line-height: 1.55; }
+
+/* ── TIMELINE STRIP ─────────────────────────────────────── */
+.timeline-wrap {
+  border-top: 1px solid var(--border);
+  padding: 40px 0 56px;
+}
+.timeline-row { display: flex; align-items: flex-start; gap: 0; }
+.tl-phase {
+  flex: 1; position: relative; padding-right: 0;
+}
+.tl-phase:not(:last-child)::after {
+  content: '';
+  position: absolute; right: 0; top: 18px;
+  width: calc(100% - 120px); height: 1px;
+  background: linear-gradient(90deg, var(--border-2) 0%, transparent 100%);
+}
+.tl-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px; font-weight: 600; color: var(--violet);
+  margin-bottom: 8px;
+}
+.tl-title { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+.tl-range { font-size: 11.5px; color: var(--dim); font-family: 'JetBrains Mono', monospace; margin-bottom: 8px; }
+.tl-desc { font-size: 12px; color: var(--muted); line-height: 1.55; max-width: 160px; }
+
+/* ── FIT CHECK ──────────────────────────────────────────── */
+.fit-wrap {
+  border-top: 1px solid var(--border);
+  padding: 36px 0 56px;
+}
+.fit-grid { display: grid; grid-template-columns: 200px 1fr 1fr; gap: 56px 40px; align-items: start; }
+.fit-list { display: flex; flex-direction: column; gap: 8px; }
+.fit-item {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 13.5px; color: var(--muted);
+}
+.fit-dot-yes { width: 7px; height: 7px; border-radius: 50%; background: var(--violet); flex-shrink: 0; }
+.fit-dot-no  { width: 7px; height: 7px; border-radius: 50%; background: var(--border-2); flex-shrink: 0; }
+.fit-col-label {
+  font-size: 11px; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 0.1em; color: var(--dim); margin-bottom: 14px;
+}
+
+/* ── BOTTOM CTA ─────────────────────────────────────────── */
+.cta-section {
+  margin-top: 80px;
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 80px 0;
+  text-align: center;
+}
+.cta-section h2 {
+  font-size: 40px; font-weight: 800;
+  letter-spacing: -0.02em; margin-bottom: 16px;
+}
+.cta-section p {
+  font-size: 17px; color: var(--muted); margin-bottom: 36px;
+}
+.cta-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+.btn-primary {
+  background: var(--grad); color: #fff;
+  font-weight: 700; font-size: 14px;
+  padding: 13px 30px; border: none; border-radius: 7px;
+  transition: opacity 0.15s, transform 0.15s;
+}
+.btn-secondary {
+  background: transparent;
+  border: 1px solid var(--border-2); color: var(--muted);
+  font-weight: 500; font-size: 14px;
+  padding: 13px 30px; border-radius: 7px;
+  transition: border-color 0.15s, color 0.15s;
+}
+.btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
+.btn-secondary:hover { border-color: var(--violet-br); color: var(--text); }
+
+/* ── FOOTER ─────────────────────────────────────────────── */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 32px 40px;
+  max-width: 1140px; margin: 0 auto;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.foot-left { display: flex; align-items: center; gap: 14px; }
+.foot-left img { height: 24px; width: auto; opacity: 0.7; }
+.foot-left span { font-size: 12.5px; color: var(--dim); }
+.foot-right { font-size: 12.5px; color: var(--dim); }
+
+/* ── RESPONSIVE ─────────────────────────────────────────── */
+@media (max-width: 900px) {
+  nav { padding: 0 24px; }
+  .nav-links { display: none; }
+  .page-hero h1 { font-size: 36px; }
+  .svc-header { grid-template-columns: 1fr; }
+  .price-card { position: static; }
+  .deliv-inner { grid-template-columns: 1fr; gap: 24px; }
+  .deliv-grid { grid-template-columns: 1fr 1fr; }
+  .timeline-row { flex-direction: column; gap: 24px; }
+  .tl-phase::after { display: none; }
+  .fit-grid { grid-template-columns: 1fr 1fr; }
+  footer { flex-direction: column; gap: 16px; text-align: center; }
+}
+
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="logo"><img src="assets/logo.png" alt="Kinetra AI"></a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="services.html" class="active">Services</a></li>
+    <li><a href="index.html#process">Process</a></li>
+    <li><a href="mailto:kinetra@kinetra-ai.com">Contact</a></li>
+  </ul>
+  <button class="nav-btn" onclick="window.location='mailto:kinetra@kinetra-ai.com'">Book a Call</button>
+</nav>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="wrap">
+    <div class="pill hl hd1"><span class="pill-dot"></span> Six services. Every layer of automation.</div>
+    <h1 class="hl hd2">Built. Tested.<br><span class="grad-text">Deployed.</span></h1>
+    <p class="sub hl hd3">Every engagement starts with a fixed scope and a hard delivery date. No retainers for discovery. No vague statements of work. You know exactly what ships before work begins.</p>
+  </div>
+</div>
+
+<!-- SERVICE NAV -->
+<div class="svc-nav">
+  <div class="svc-nav-inner">
+    <a href="#strategy"       class="svc-nav-link">AI Strategy</a>
+    <a href="#ml-dev"         class="svc-nav-link">ML Development</a>
+    <a href="#implementation" class="svc-nav-link">Implementation</a>
+    <a href="#poc"            class="svc-nav-link">Prototyping &amp; POC</a>
+    <a href="#data"           class="svc-nav-link">Data Engineering</a>
+    <a href="#support"        class="svc-nav-link">Ongoing Support</a>
+  </div>
+</div>
+
+<!-- 1. AI STRATEGY -->
+<div class="svc-section" id="strategy">
+  <div class="wrap">
+    <div class="svc-header">
+      <div class="r">
+        <div class="svc-cat-badge">Strategy</div>
+        <h2>AI Strategy<br>&amp; Roadmap</h2>
+        <p class="svc-lead">We analyze your current operations, identify the highest-ROI AI opportunities, and deliver a phased implementation roadmap — built around your stack, your team, and your 90-day window. No fluff. Just a clear path to automation.</p>
+      </div>
+      <div class="r d2">
+        <div class="price-card">
+          <div class="price-card-head">
+            <div class="price-tier">Engagement Type</div>
+            <div class="price-label">Fixed scope</div>
+            <div class="price-note">One price before work begins. No discovery retainer.</div>
+          </div>
+          <div class="price-card-body">
+            <div class="price-feature"><svg class="pf-icon" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.2"/><path d="M5 8l2 2 4-4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>90-day phased roadmap delivered</div>
+            <div class="price-feature"><svg class="pf-icon" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.2"/><path d="M5 8l2 2 4-4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>ROI model with ranked opportunities</div>
+            <div class="price-feature"><svg class="pf-icon" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.2"/><path d="M5 8l2 2 4-4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Stack compatibility assessment</div>
+            <div class="price-feature"><svg class="pf-icon" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.2"/><path d="M5 8l2 2 4-4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Vendor shortlist (if needed)</div>
+            <div class="price-feature"><svg class="pf-icon" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.2"/><path d="M5 8l2 2 4-4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Honest fit assessment — we say no if needed</div>
+            <a href="mailto:kinetra@kinetra-ai.com?subject=AI%20Strategy%20Inquiry" class="price-cta price-cta-primary">Get a Scope &rarr;</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="deliv-wrap"><div class="wrap"><div class="deliv-inner r"><div class="deliv-label">What you get</div><div class="deliv-grid"><div class="deliv-item"><div class="deliv-num">01</div><div class="deliv-title">Operations Audit</div><div class="deliv-desc">Structured review of your current workflows, tools, and data sources. We find where time is lost.</div></div><div class="deliv-item"><div class="deliv-num">02</div><div class="deliv-title">Opportunity Map</div><div class="deliv-desc">Ranked list of AI opportunities by ROI, implementation effort, and time to payback.</div></div><div class="deliv-item"><div class="deliv-num">03</div><div class="deliv-title">90-Day Roadmap</div><div class="deliv-desc">Phased build plan with milestones, owners, and hard delivery dates — not a slide deck.</div></div></div></div></div></div>
+  <div class="timeline-wrap"><div class="wrap"><div class="deliv-label r" style="margin-bottom:28px;">Timeline</div><div class="timeline-row"><div class="tl-phase r d1"><div class="tl-num">WK 01</div><div class="tl-title">Discovery</div><div class="tl-range">Days 1–5</div><div class="tl-desc">Questionnaire, system review, stakeholder interviews</div></div><div class="tl-phase r d2"><div class="tl-num">WK 02</div><div class="tl-title">Analysis</div><div class="tl-range">Days 6–10</div><div class="tl-desc">ROI modeling, opportunity scoring, stack mapping</div></div><div class="tl-phase r d3"><div class="tl-num">WK 03</div><div class="tl-title">Roadmap Draft</div><div class="tl-range">Days 11–15</div><div class="tl-desc">Phase plan, milestones, vendor shortlist if applicable</div></div><div class="tl-phase r d4"><div class="tl-num">WK 04</div><div class="tl-title">Delivery</div><div class="tl-range">Day 20</div><div class="tl-desc">Final roadmap doc + walkthrough call + Q&amp;A</div></div></div></div></div>
+  <div class="fit-wrap"><div class="wrap"><div class="fit-grid r"><div class="deliv-label">Right fit?</div><div><div class="fit-col-label">Good fit</div><div class="fit-list"><div class="fit-item"><div class="fit-dot-yes"></div>You know AI can help but don't know where to start</div><div class="fit-item"><div class="fit-dot-yes"></div>Your team is stretched and needs clarity before spending</div><div class="fit-item"><div class="fit-dot-yes"></div>You want a vendor-neutral second opinion</div><div class="fit-item"><div class="fit-dot-yes"></div>You have budget for full build but want to phase it</div></div></div><div><div class="fit-col-label">Not a fit</div><div class="fit-list"><div class="fit-item"><div class="fit-dot-no"></div>You already have a clear build spec ready</div><div class="fit-item"><div class="fit-dot-no"></div>You want a 200-slide transformation strategy</div><div class="fit-item"><div class="fit-dot-no"></div>You need implementation to start this week</div></div></div></div></div></div>
+</div>
+
+<!-- 2. ML DEVELOPMENT -->
+<div class="svc-section" id="ml-dev">
+  <div class="wrap">
+    <div class="svc-header">
+      <div class="r">
+        <div class="svc-cat-badge">Machine Learning</div>
+        <h2>ML Development<br>&amp; Custom Models</h2>
+        <p class="svc-lead">When off-the-shelf AI doesn't fit your workflow, we build what does. From data pipelines to fine-tuned models, we develop ML systems trained on your actual business data — then hand you the keys.</p>
+      </div>
+      <div class="r d2">
+        <div class="price-card featured">
+          <div class="price-card-head"><div class="price-tier">Most Custom</div><div class="price-label">Your data, your IP</div><div class="price-note">Model ownership transfers to you at delivery. We keep nothing.</div></div>
+          <div class="price-card-body">
+            <div class="price-feature"><svg class="pf-icon" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.2"/><path d="M5 8l2 2 4-4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Data pipeline design &amp; build</div>
+            <div class="price-feature"><svg class="pf-icon" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.2"/><path d="M5 8l2 2 4-4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Fine-tuning on your business data</div>
+            <div class="price-feature"><svg class="pf-icon" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.2"/><path d="M5 8l2 2 4-4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Model evaluation &amp; accuracy benchmarks</div>
+            <div class="price-feature"><svg class="pf-icon" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.2"/><path d="M5 8l2 2 4-4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Deployment + serving API included</div>
+            <div class="price-feature"><svg class="pf-icon" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.2"/><path d="M5 8l2 2 4-4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Full IP transfer at handoff</div>
+            <a href="mailto:kinetra@kinetra-ai.com?subject=ML%20Development%20Inquiry" class="price-cta price-cta-primary">Get a Scope &rarr;</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="deliv-wrap"><div class="wrap"><div class="deliv-inner r"><div class="deliv-label">What you get</div><div class="deliv-grid"><div class="deliv-item"><div class="deliv-num">01</div><div class="deliv-title">Data Pipeline</div><div class="deliv-desc">Ingest, clean, and structure your data sources into a training-ready format.</div></div><div class="deliv-item"><div class="deliv-num">02</div><div class="deliv-title">Trained Model</div><div class="deliv-desc">Fine-tuned or custom-built ML model with documented accuracy metrics and benchmarks.</div></div><div class="deliv-item"><div class="deliv-num">03</div><div class="deliv-title">Serving API + Docs</div><div class="deliv-desc">Deployed inference endpoint, integration guide, and model card. Ready to consume.</div></div></div></div></div></div>
+  <div class="timeline-wrap"><div class="wrap"><div class="deliv-label r" style="margin-bottom:28px;">Timeline</div><div class="timeline-row"><div class="tl-phase r d1"><div class="tl-num">WK 01–02</div><div class="tl-title">Data Audit</div><div class="tl-range">Days 1–10</div><div class="tl-desc">Assess data quality, volume, and training feasibility</div></div><div class="tl-phase r d2"><div class="tl-num">WK 02–04</div><div class="tl-title">Pipeline Build</div><div class="tl-range">Days 10–28</div><div class="tl-desc">Ingest, transform, and validate training dataset</div></div><div class="tl-phase r d3"><div class="tl-num">WK 04–07</div><div class="tl-title">Training &amp; Eval</div><div class="tl-range">Days 28–49</div><div class="tl-desc">Fine-tuning, iteration, accuracy benchmarks</div></div><div class="tl-phase r d4"><div class="tl-num">WK 08</div><div class="tl-title">Delivery</div><div class="tl-range">Day 56</div><div class="tl-desc">Deployed API, handoff call, documentation, IP transfer</div></div></div></div></div>
+  <div class="fit-wrap"><div class="wrap"><div class="fit-grid r"><div class="deliv-label">Right fit?</div><div><div class="fit-col-label">Good fit</div><div class="fit-list"><div class="fit-item"><div class="fit-dot-yes"></div>GPT/generic AI doesn't understand your domain</div><div class="fit-item"><div class="fit-dot-yes"></div>You have proprietary data you want to leverage</div><div class="fit-item"><div class="fit-dot-yes"></div>You want to own the model, not depend on an API</div><div class="fit-item"><div class="fit-dot-yes"></div>Accuracy and auditability matter in your workflow</div></div></div><div><div class="fit-col-label">Not a fit</div><div class="fit-list"><div class="fit-item"><div class="fit-dot-no"></div>No structured data yet — start with Data Engineering</div><div class="fit-item"><div class="fit-dot-no"></div>Off-the-shelf AI already handles your use case</div><div class="fit-item"><div class="fit-dot-no"></div>Under 30 days to production is required</div></div></div></div></div></div>
+</div>
+
+<!-- 3. AI IMPLEMENTATION -->
+<div class="svc-section" id="implementation">
+  <div class="wrap">
+    <div class="svc-header">
+      <div class="r">
+        <div class="svc-cat-badge">Implementation</div>
+        <h2>AI Solution<br>Implementation</h2>
+        <p class="svc-lead">We don't just recommend. We deploy. From CRM automation to document processing, we integrate AI directly into your existing tools and workflows — fully operational from day one.</p>
+      </div>
+      <div class="r d2">
+        <div class="price-card featured">
+          <div class="price-card-head"><div class="price-tier">Most Popular</div><div class="price-label">Live in 30 days</div><div class="price-note">Or we refund the deposit. That's the commitment.</div></div>
+          <div class="price-card-body">
+            <div class="price-feature"><svg class="pf-icon" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.2"/><path d="M5 8l2 2 4-4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Integration into your existing stack</div>
+            <div class="price-feature"><svg class="pf-icon" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.2"/><path d="M5 8l2 2 4-4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Workflow automation (CRM, docs, comms)</div>
+            <div class="price-feature"><svg class="pf-icon" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.2"/><path d="M5 8l2 2 4-4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Team training &amp; handoff included</div>
+            <div class="price-feature"><svg class="pf-icon" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.2"/><path d="M5 8l2 2 4-4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>30-day post-launch monitoring</div>
+            <div class="price-feature"><svg class="pf-icon" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.2"/><path d="M5 8l2 2 4-4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>You own everything at delivery</div>
+            <a href="mailto:kinetra@kinetra-ai.com?subject=AI%20Implementation%20Inquiry" class="price-cta price-cta-primary">Get a Scope &rarr;</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="deliv-wrap"><div class="wrap"><div class="deliv-inner r"><div class="deliv-label">What you get</div><div class="deliv-grid"><div class="deliv-item"><div class="deliv-num">01</div><div class="deliv-title">Scoped Integration</div><div class="deliv-desc">AI wired directly into your existing CRM, property management platform, practice management system, or custom stack.</div></div><div class="deliv-item"><div class="deliv-num">02</div><div class="deliv-title">Automated Workflows</div><div class="deliv-desc">Repetitive manual processes identified and automated — intake, routing, document generation, follow-up, reporting.</div></div><div class="deliv-item"><div class="deliv-num">03</div><div class="deliv-title">Handoff Package</div><div class="deliv-desc">Training session, runbook, and 30-day monitoring window. You can operate it without us.</div></div></div></div></div></div>
+  <div class="timeline-wrap"><div class="wrap"><div class="deliv-label r" style="margin-bottom:28px;">30-Day Sprint</div><div class="timeline-row"><div class="tl-phase r d1"><div class="tl-num">WK 01</div><div class="tl-title">Discovery</div><div class="tl-range">Days 1–7</div><div class="tl-desc">Map current workflow, confirm integrations, lock spec</div></div><div class="tl-phase r d2"><div class="tl-num">WK 02–03</div><div class="tl-title">Build</div><div class="tl-range">Days 8–21</div><div class="tl-desc">Integration development, automation logic, testing</div></div><div class="tl-phase r d3"><div class="tl-num">WK 04</div><div class="tl-title">Deploy</div><div class="tl-range">Days 22–28</div><div class="tl-desc">Production launch, team training, handoff</div></div><div class="tl-phase r d4"><div class="tl-num">POST</div><div class="tl-title">Monitoring</div><div class="tl-range">Days 29–60</div><div class="tl-desc">30-day monitoring window, bug fixes included</div></div></div></div></div>
+  <div class="fit-wrap"><div class="wrap"><div class="fit-grid r"><div class="deliv-label">Right fit?</div><div><div class="fit-col-label">Good fit</div><div class="fit-list"><div class="fit-item"><div class="fit-dot-yes"></div>You know what to automate, just not how</div><div class="fit-item"><div class="fit-dot-yes"></div>Your team spends hours on repeatable tasks</div><div class="fit-item"><div class="fit-dot-yes"></div>You're using platforms with API access (most are)</div><div class="fit-item"><div class="fit-dot-yes"></div>You need it running in 30 days, not 6 months</div></div></div><div><div class="fit-col-label">Not a fit</div><div class="fit-list"><div class="fit-item"><div class="fit-dot-no"></div>You're not sure what to automate — start with Strategy</div><div class="fit-item"><div class="fit-dot-no"></div>Your stack has zero API or integration support</div><div class="fit-item"><div class="fit-dot-no"></div>You need a custom model — see ML Development</div></div></div></div></div></div>
+</div>
+
+<!-- 4. POC -->
+<div class="svc-section" id="poc">
+  <div class="wrap">
+    <div class="svc-header">
+      <div class="r">
+        <div class="svc-cat-badge">Prototyping</div>
+        <h2>AI Prototyping<br>&amp; Proof of Concept</h2>
+        <p class="svc-lead">Got an idea but not sure it's viable? We'll build a working prototype in 2–4 weeks. Real data. Real outcomes. You'll know if it's worth scaling before committing a full budget.</p>
+      </div>
+      <div class="r d2">
+        <div class="price-card">
+          <div class="price-card-head"><div class="price-tier">Low Commitment</div><div class="price-label">2–4 week sprint</div><div class="price-note">Test the idea before betting the budget on it.</div></div>
+          <div class="price-card-body">
+            <div class="price-feature"><svg class="pf-icon" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.2"/><path d="M5 8l2 2 4-4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Working prototype on your real data</div>
+            <div class="price-feature"><svg class="pf-icon" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.2"/><path d="M5 8l2 2 4-4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Viability report with scale estimate</div>
+            <div class="price-feature"><svg class="pf-icon" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.2"/><path d="M5 8l2 2 4-4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Full source code delivered</div>
+            <div class="price-feature"><svg class="pf-icon" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.2"/><path d="M5 8l2 2 4-4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Go/no-go recommendation included</div>
+            <a href="mailto:kinetra@kinetra-ai.com?subject=POC%20Inquiry" class="price-cta price-cta-primary">Get a Scope &rarr;</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="deliv-wrap"><div class="wrap"><div class="deliv-inner r"><div class="deliv-label">What you get</div><div class="deliv-grid"><div class="deliv-item"><div class="deliv-num">01</div><div class="deliv-title">Working Prototype</div><div class="deliv-desc">A functional system built on your actual data — not a mock. You can demo it, test it, and show stakeholders.</div></div><div class="deliv-item"><div class="deliv-num">02</div><div class="deliv-title">Viability Assessment</div><div class="deliv-desc">Accuracy benchmarks, edge cases identified, cost-to-scale estimate, and honest go/no-go recommendation.</div></div><div class="deliv-item"><div class="deliv-num">03</div><div class="deliv-title">Scale Roadmap</div><div class="deliv-desc">If it's viable: full build scope, timeline, and cost estimate to take it to production.</div></div></div></div></div></div>
+  <div class="timeline-wrap"><div class="wrap"><div class="deliv-label r" style="margin-bottom:28px;">Timeline</div><div class="timeline-row"><div class="tl-phase r d1"><div class="tl-num">DAYS 1–3</div><div class="tl-title">Scope Lock</div><div class="tl-range">Day 1–3</div><div class="tl-desc">Define what the prototype must prove</div></div><div class="tl-phase r d2"><div class="tl-num">WK 01–02</div><div class="tl-title">Build</div><div class="tl-range">Days 4–14</div><div class="tl-desc">Rapid prototype on real data with daily check-ins</div></div><div class="tl-phase r d3"><div class="tl-num">WK 03</div><div class="tl-title">Validate</div><div class="tl-range">Days 15–21</div><div class="tl-desc">Testing, edge cases, performance benchmarking</div></div><div class="tl-phase r d4"><div class="tl-num">DAY 28</div><div class="tl-title">Decision</div><div class="tl-range">Day 28</div><div class="tl-desc">Viability report + go/no-go + full build estimate</div></div></div></div></div>
+  <div class="fit-wrap"><div class="wrap"><div class="fit-grid r"><div class="deliv-label">Right fit?</div><div><div class="fit-col-label">Good fit</div><div class="fit-list"><div class="fit-item"><div class="fit-dot-yes"></div>You have an AI idea but need proof before committing</div><div class="fit-item"><div class="fit-dot-yes"></div>You need to show internal stakeholders it's real</div><div class="fit-item"><div class="fit-dot-yes"></div>You want a risk-limited entry into AI investment</div></div></div><div><div class="fit-col-label">Not a fit</div><div class="fit-list"><div class="fit-item"><div class="fit-dot-no"></div>You're ready to build — skip straight to Implementation</div><div class="fit-item"><div class="fit-dot-no"></div>You have no data to prototype with</div><div class="fit-item"><div class="fit-dot-no"></div>You need production-grade output (this is a test)</div></div></div></div></div></div>
+</div>
+
+<!-- 5. DATA ENGINEERING -->
+<div class="svc-section" id="data">
+  <div class="wrap">
+    <div class="svc-header">
+      <div class="r">
+        <div class="svc-cat-badge">Data</div>
+        <h2>Data Engineering<br>&amp; Analytics</h2>
+        <p class="svc-lead">Decisions are only as good as your data. We build the pipelines, clean the sources, and create dashboards your team will actually use — with AI layers that surface what matters, when it matters.</p>
+      </div>
+      <div class="r d2">
+        <div class="price-card">
+          <div class="price-card-head"><div class="price-tier">Foundation Layer</div><div class="price-label">Zero manual steps</div><div class="price-note">Data flows in, insights flow out. No spreadsheet exports.</div></div>
+          <div class="price-card-body">
+            <div class="price-feature"><svg class="pf-icon" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.2"/><path d="M5 8l2 2 4-4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Automated data pipelines</div>
+            <div class="price-feature"><svg class="pf-icon" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.2"/><path d="M5 8l2 2 4-4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Source cleaning &amp; deduplication</div>
+            <div class="price-feature"><svg class="pf-icon" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.2"/><path d="M5 8l2 2 4-4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Live dashboards your team actually uses</div>
+            <div class="price-feature"><svg class="pf-icon" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.2"/><path d="M5 8l2 2 4-4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>AI anomaly detection &amp; alerts</div>
+            <div class="price-feature"><svg class="pf-icon" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.2"/><path d="M5 8l2 2 4-4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Documentation + runbook included</div>
+            <a href="mailto:kinetra@kinetra-ai.com?subject=Data%20Engineering%20Inquiry" class="price-cta price-cta-primary">Get a Scope &rarr;</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="deliv-wrap"><div class="wrap"><div class="deliv-inner r"><div class="deliv-label">What you get</div><div class="deliv-grid"><div class="deliv-item"><div class="deliv-num">01</div><div class="deliv-title">Automated Pipelines</div><div class="deliv-desc">Data flows from your sources — cleaned, deduplicated, and structured — without manual exports or human steps.</div></div><div class="deliv-item"><div class="deliv-num">02</div><div class="deliv-title">Live Dashboard</div><div class="deliv-desc">Decision-maker view built around your KPIs. Not a generic BI tool — built for your team's actual questions.</div></div><div class="deliv-item"><div class="deliv-num">03</div><div class="deliv-title">AI Alert Layer</div><div class="deliv-desc">Anomaly detection and threshold alerts surface issues before they become problems. Comes to you, not vice versa.</div></div></div></div></div></div>
+  <div class="timeline-wrap"><div class="wrap"><div class="deliv-label r" style="margin-bottom:28px;">Timeline</div><div class="timeline-row"><div class="tl-phase r d1"><div class="tl-num">WK 01</div><div class="tl-title">Source Audit</div><div class="tl-range">Days 1–7</div><div class="tl-desc">Map all data sources, quality assessment, schema design</div></div><div class="tl-phase r d2"><div class="tl-num">WK 02–03</div><div class="tl-title">Pipeline Build</div><div class="tl-range">Days 8–21</div><div class="tl-desc">Ingest, clean, transform, and schedule pipelines</div></div><div class="tl-phase r d3"><div class="tl-num">WK 04</div><div class="tl-title">Dashboard + AI Layer</div><div class="tl-range">Days 22–28</div><div class="tl-desc">Build views, wire alert rules, test with real data</div></div><div class="tl-phase r d4"><div class="tl-num">WK 05</div><div class="tl-title">Handoff</div><div class="tl-range">Day 35</div><div class="tl-desc">Training, runbook, and 30-day monitoring window</div></div></div></div></div>
+  <div class="fit-wrap"><div class="wrap"><div class="fit-grid r"><div class="deliv-label">Right fit?</div><div><div class="fit-col-label">Good fit</div><div class="fit-list"><div class="fit-item"><div class="fit-dot-yes"></div>Your team runs reports manually every week</div><div class="fit-item"><div class="fit-dot-yes"></div>You have data in 3+ disconnected systems</div><div class="fit-item"><div class="fit-dot-yes"></div>Leadership is making decisions on stale exports</div><div class="fit-item"><div class="fit-dot-yes"></div>You want AI to surface problems before humans notice</div></div></div><div><div class="fit-col-label">Not a fit</div><div class="fit-list"><div class="fit-item"><div class="fit-dot-no"></div>You have a single clean data source already</div><div class="fit-item"><div class="fit-dot-no"></div>You need a BI tool, not automation (use Looker)</div><div class="fit-item"><div class="fit-dot-no"></div>You need a custom model — layer ML on top of this</div></div></div></div></div></div>
+</div>
+
+<!-- 6. ONGOING SUPPORT -->
+<div class="svc-section" id="support">
+  <div class="wrap">
+    <div class="svc-header">
+      <div class="r">
+        <div class="svc-cat-badge">Support</div>
+        <h2>Ongoing Support<br>&amp; Maintenance</h2>
+        <p class="svc-lead">The work doesn't end at deployment. We provide continuous monitoring, model updates, and system optimization so your AI keeps performing as your business evolves.</p>
+      </div>
+      <div class="r d2">
+        <div class="price-card featured">
+          <div class="price-card-head"><div class="price-tier">Monthly Retainer</div><div class="price-label">Always-on coverage</div><div class="price-note">Cancel any time. No lock-in beyond the current month.</div></div>
+          <div class="price-card-body">
+            <div class="price-feature"><svg class="pf-icon" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.2"/><path d="M5 8l2 2 4-4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>System health monitoring</div>
+            <div class="price-feature"><svg class="pf-icon" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.2"/><path d="M5 8l2 2 4-4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Model drift detection &amp; retraining</div>
+            <div class="price-feature"><svg class="pf-icon" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.2"/><path d="M5 8l2 2 4-4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Workflow updates as your business changes</div>
+            <div class="price-feature"><svg class="pf-icon" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.2"/><path d="M5 8l2 2 4-4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Monthly performance report</div>
+            <div class="price-feature"><svg class="pf-icon" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.2"/><path d="M5 8l2 2 4-4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Priority access for new scope requests</div>
+            <a href="mailto:kinetra@kinetra-ai.com?subject=Support%20Retainer%20Inquiry" class="price-cta price-cta-primary">Get a Scope &rarr;</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="deliv-wrap"><div class="wrap"><div class="deliv-inner r"><div class="deliv-label">What's covered</div><div class="deliv-grid"><div class="deliv-item"><div class="deliv-num">01</div><div class="deliv-title">System Monitoring</div><div class="deliv-desc">Uptime tracking, performance baselines, and automated alerts when systems deviate from expected behavior.</div></div><div class="deliv-item"><div class="deliv-num">02</div><div class="deliv-title">Model Maintenance</div><div class="deliv-desc">Drift detection on live model outputs. Retraining when accuracy degrades. Your AI stays current as data changes.</div></div><div class="deliv-item"><div class="deliv-num">03</div><div class="deliv-title">Workflow Updates</div><div class="deliv-desc">As your business adds staff, changes tools, or expands scope, we update automations to match. Included.</div></div></div></div></div></div>
+  <div class="timeline-wrap"><div class="wrap"><div class="deliv-label r" style="margin-bottom:28px;">What a retainer month looks like</div><div class="timeline-row"><div class="tl-phase r d1"><div class="tl-num">WK 01</div><div class="tl-title">Health Check</div><div class="tl-range">Day 1–7</div><div class="tl-desc">System uptime review, performance vs. baseline, error log audit</div></div><div class="tl-phase r d2"><div class="tl-num">WK 02</div><div class="tl-title">Model Review</div><div class="tl-range">Day 8–14</div><div class="tl-desc">Drift check on live outputs, accuracy spot-test, retraining if needed</div></div><div class="tl-phase r d3"><div class="tl-num">WK 03</div><div class="tl-title">Updates</div><div class="tl-range">Day 15–21</div><div class="tl-desc">Workflow changes from your team shipped, tested, deployed</div></div><div class="tl-phase r d4"><div class="tl-num">WK 04</div><div class="tl-title">Report</div><div class="tl-range">Day 28</div><div class="tl-desc">Monthly summary: uptime, model performance, changes made, next month</div></div></div></div></div>
+  <div class="fit-wrap"><div class="wrap"><div class="fit-grid r"><div class="deliv-label">Right fit?</div><div><div class="fit-col-label">Good fit</div><div class="fit-list"><div class="fit-item"><div class="fit-dot-yes"></div>You've deployed AI and want it maintained long-term</div><div class="fit-item"><div class="fit-dot-yes"></div>Your business changes often — automations need updates</div><div class="fit-item"><div class="fit-dot-yes"></div>You want a partner, not a one-time vendor</div></div></div><div><div class="fit-col-label">Not a fit</div><div class="fit-list"><div class="fit-item"><div class="fit-dot-no"></div>You haven't deployed anything yet — build first</div><div class="fit-item"><div class="fit-dot-no"></div>You want someone to run the business, not the systems</div></div></div></div></div></div>
+</div>
+
+<!-- CTA -->
+<div class="cta-section">
+  <div class="wrap r">
+    <h2>Not sure which service fits?</h2>
+    <p>Every engagement starts with a 30-minute scoping call. We'll tell you exactly what applies — and what doesn't.</p>
+    <div class="cta-btns">
+      <button class="btn-primary" onclick="window.location='mailto:kinetra@kinetra-ai.com?subject=Scoping%20Call%20Request'">Book a Scoping Call</button>
+      <button class="btn-secondary" onclick="window.location='index.html'">Back to Home</button>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="foot-left">
+    <img src="assets/logo-mark.png" alt="Kinetra AI">
+    <span>&copy; 2026 Kinetra AI LLC &middot; kinetra@kinetra-ai.com</span>
+  </div>
+  <div class="foot-right">Powered by Kinetra AI</div>
+</footer>
+
+<script>
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+  });
+}, { threshold: 0.06, rootMargin: '0px 0px -24px 0px' });
+document.querySelectorAll('.r').forEach(el => io.observe(el));
+
+const svcLinks = document.querySelectorAll('.svc-nav-link');
+const sections = document.querySelectorAll('.svc-section');
+const secObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      const id = e.target.id;
+      svcLinks.forEach(l => {
+        l.classList.toggle('active', l.getAttribute('href') === '#' + id);
+      });
+    }
+  });
+}, { threshold: 0.35 });
+sections.forEach(s => secObs.observe(s));
+
+document.querySelectorAll('.hl').forEach(el => {
+  el.style.opacity = '0';
+  el.style.transform = 'translateY(18px)';
+});
+setTimeout(() => {
+  let delay = 0;
+  document.querySelectorAll('.hl').forEach((el) => {
+    setTimeout(() => {
+      el.style.transition = 'opacity 0.9s cubic-bezier(.22,1,.36,1), transform 0.9s cubic-bezier(.22,1,.36,1)';
+      el.style.opacity = '1';
+      el.style.transform = 'none';
+    }, delay);
+    delay += 130;
+  });
+}, 80);
+</script>
+</body>
+</html>
