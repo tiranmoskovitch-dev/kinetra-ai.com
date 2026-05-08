@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kinetra AI — Proposal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+
+@page { size: A4; margin: 0; }
+@media print {
+  html, body { width: 210mm; height: 297mm; }
+  .page { page-break-after: always; page-break-inside: avoid; }
+  .page:last-child { page-break-after: auto; }
+  .no-print { display: none !important; }
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { font-size: 14px; }
+body {
+  background: #1A1A2E;
+  font-family: 'Inter', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  color: #E8EEFF;
+}
+a { text-decoration: none; color: inherit; }
+
+:root {
+  --bg:         #090D18;
+  --surface:    #10141F;
+  --surface-2:  #141926;
+  --border:     #1C2333;
+  --border-2:   #2A3347;
+  --text:       #E8EEFF;
+  --muted:      #8892AA;
+  --dim:        #4E5A72;
+  --violet:     #8B5CF6;
+  --indigo:     #6366F1;
+  --violet-lt:  #A78BFA;
+  --violet-dim: rgba(139,92,246,0.08);
+  --violet-br:  rgba(139,92,246,0.22);
+  --grad:       linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%);
+}
+
+.page {
+  width: 210mm;
+  min-height: 297mm;
+  background: var(--bg);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto 2px;
+}
+.page::before {
+  content: '';
+  position: absolute; pointer-events: none;
+  width: 500px; height: 500px;
+  top: -200px; right: -150px;
+  background: radial-gradient(circle, rgba(99,102,241,0.06) 0%, transparent 65%);
+}
+.page::after {
+  content: '';
+  position: absolute; inset: 0; pointer-events: none;
+  background-image: radial-gradient(circle, rgba(139,92,246,0.08) 1px, transparent 1px);
+  background-size: 28px 28px;
+  opacity: 0.4;
+}
+.page-inner {
+  position: relative; z-index: 1;
+  padding: 14mm 16mm;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.page-num {
+  position: absolute;
+  bottom: 10mm; right: 16mm;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px; color: var(--dim);
+  z-index: 2;
+}
+
+.prop-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding-bottom: 10mm;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 10mm;
+}
+.prop-header-logo img { height: 28px; }
+.prop-header-meta { text-align: right; }
+.prop-header-meta .prop-label {
+  font-size: 9px; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 0.1em; color: var(--dim);
+}
+.prop-header-meta .prop-ref {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px; color: var(--violet-lt); margin-top: 3px;
+}
+
+.cover-inner { flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
+.cover-top { padding-top: 6mm; }
+.cover-for-label { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.12em; color: var(--dim); margin-bottom: 6px; }
+.cover-client { font-size: 28px; font-weight: 800; letter-spacing: -0.02em; color: var(--text); line-height: 1.1; margin-bottom: 4px; }
+.cover-client-sub { font-size: 13px; color: var(--muted); margin-bottom: 20mm; }
+.grad-rule { height: 2px; background: var(--grad); border-radius: 1px; margin-bottom: 20mm; width: 48px; }
+.cover-title { font-size: 38px; font-weight: 900; letter-spacing: -0.03em; line-height: 1.05; color: var(--text); margin-bottom: 10px; }
+.cover-title-accent { background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.cover-tagline { font-size: 14px; color: var(--muted); max-width: 340px; line-height: 1.6; margin-bottom: 16mm; }
+.cover-meta-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6mm; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 8mm; }
+.cover-meta-label { font-size: 8.5px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--dim); margin-bottom: 5px; }
+.cover-meta-val { font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 600; color: var(--text); }
+.cover-meta-val.accent { color: var(--violet-lt); }
+.cover-bottom { display: flex; align-items: center; justify-content: space-between; padding-top: 8mm; border-top: 1px solid var(--border); }
+.cover-contact { font-size: 10px; color: var(--dim); line-height: 1.6; }
+.cover-contact strong { color: var(--muted); }
+.cover-badge { display: inline-flex; align-items: center; gap: 5px; background: var(--violet-dim); border: 1px solid var(--violet-br); border-radius: 20px; padding: 5px 12px; font-size: 9px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--violet-lt); }
+.cover-badge-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--violet); }
+
+.sec-eyebrow { font-size: 8.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.14em; color: var(--violet); margin-bottom: 5px; }
+.sec-h2 { font-size: 20px; font-weight: 800; letter-spacing: -0.02em; color: var(--text); margin-bottom: 4mm; }
+.sec-sub { font-size: 12px; color: var(--muted); line-height: 1.65; margin-bottom: 6mm; }
+
+.situation-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4mm; margin-bottom: 6mm; }
+.sit-card { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 5mm; }
+.sit-card-label { font-size: 8px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--dim); margin-bottom: 5px; }
+.sit-card-val { font-size: 12px; color: var(--muted); line-height: 1.6; }
+.sit-card.highlight { border-color: var(--violet-br); }
+.sit-card.highlight .sit-card-val { color: var(--text); }
+
+.cost-row { display: flex; align-items: center; justify-content: space-between; padding: 3.5mm 0; border-bottom: 1px solid rgba(28,35,51,0.7); font-size: 11.5px; }
+.cost-row:last-child { border-bottom: none; }
+.cost-label { color: var(--muted); }
+.cost-val { font-family: 'JetBrains Mono', monospace; font-weight: 600; color: var(--text); }
+.cost-val.neg { color: #F87171; }
+.cost-val.pos { color: var(--violet-lt); }
+
+.scope-table { width: 100%; border-collapse: collapse; }
+.scope-table th { font-size: 8px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--dim); padding: 0 0 3mm; text-align: left; border-bottom: 1px solid var(--border); }
+.scope-table th:last-child { text-align: right; }
+.scope-table td { padding: 3.5mm 0; border-bottom: 1px solid rgba(28,35,51,0.5); vertical-align: top; }
+.scope-table tr:last-child td { border-bottom: none; }
+.scope-num { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 600; color: var(--violet); padding-right: 4mm; width: 24px; }
+.scope-item { font-size: 12px; font-weight: 600; color: var(--text); margin-bottom: 2px; }
+.scope-desc { font-size: 10.5px; color: var(--muted); line-height: 1.5; }
+.scope-enables { font-size: 9px; color: var(--violet-lt); margin-top: 3px; font-weight: 500; }
+.scope-date { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--dim); text-align: right; white-space: nowrap; padding-left: 4mm; }
+
+.timeline-phases { display: grid; grid-template-columns: repeat(4, 1fr); gap: 3mm; margin-bottom: 6mm; }
+.tl-phase { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; overflow: hidden; }
+.tl-phase-head { background: var(--surface-2); border-bottom: 1px solid var(--border); padding: 4mm; }
+.tl-phase-week { font-family: 'JetBrains Mono', monospace; font-size: 9px; font-weight: 600; color: var(--violet); margin-bottom: 3px; }
+.tl-phase-title { font-size: 12px; font-weight: 700; color: var(--text); }
+.tl-phase-body { padding: 4mm; }
+.tl-task { display: flex; align-items: flex-start; gap: 5px; font-size: 10px; color: var(--muted); line-height: 1.5; margin-bottom: 4px; }
+.tl-task::before { content: '▸'; color: var(--violet); flex-shrink: 0; margin-top: 0.5px; font-size: 8px; }
+.tl-deliverable { margin-top: 4mm; padding-top: 3mm; border-top: 1px solid var(--border); font-size: 9px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--dim); }
+.tl-deliverable span { display: block; margin-top: 3px; font-size: 10px; font-weight: 500; text-transform: none; letter-spacing: 0; color: var(--violet-lt); }
+
+.milestone-track { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 5mm; margin-bottom: 6mm; }
+.milestone-row { display: flex; align-items: center; gap: 3mm; padding: 2.5mm 0; border-bottom: 1px solid rgba(28,35,51,0.5); }
+.milestone-row:last-child { border-bottom: none; }
+.milestone-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--violet-dim); border: 1px solid var(--violet-br); flex-shrink: 0; }
+.milestone-dot.done { background: var(--violet); border-color: var(--violet); }
+.milestone-label { font-size: 11px; color: var(--muted); flex: 1; }
+.milestone-date { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--dim); }
+
+.invest-card { background: var(--surface); border: 1px solid var(--violet-br); border-radius: 8px; overflow: hidden; margin-bottom: 5mm; box-shadow: 0 0 0 1px rgba(139,92,246,0.06); }
+.invest-card-head { padding: 6mm 7mm; border-bottom: 1px solid var(--border); display: flex; align-items: flex-start; justify-content: space-between; gap: 6mm; }
+.invest-type { font-size: 8.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: var(--violet-lt); margin-bottom: 5px; }
+.invest-amount { font-family: 'JetBrains Mono', monospace; font-size: 34px; font-weight: 700; letter-spacing: -0.03em; color: var(--text); line-height: 1; }
+.invest-amount-note { font-size: 10px; color: var(--dim); margin-top: 4px; }
+.invest-head-right { text-align: right; }
+.invest-guarantee { background: var(--violet-dim); border: 1px solid var(--violet-br); border-radius: 5px; padding: 3mm 4mm; }
+.invest-guarantee-label { font-size: 8px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--violet-lt); margin-bottom: 4px; }
+.invest-guarantee-val { font-size: 11px; font-weight: 600; color: var(--text); line-height: 1.4; }
+.invest-card-body { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
+.invest-col { padding: 5mm 7mm; }
+.invest-col:first-child { border-right: 1px solid var(--border); }
+.invest-col-label { font-size: 8px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--dim); margin-bottom: 4mm; }
+.invest-row { display: flex; align-items: center; justify-content: space-between; padding: 2.5mm 0; border-bottom: 1px solid rgba(28,35,51,0.6); font-size: 11px; }
+.invest-row:last-child { border-bottom: none; }
+.invest-row-label { color: var(--muted); }
+.invest-row-val { font-family: 'JetBrains Mono', monospace; font-weight: 600; color: var(--text); }
+
+.terms-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 3mm; margin-bottom: 5mm; }
+.term-item { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 4mm; }
+.term-label { font-size: 8px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--dim); margin-bottom: 5px; }
+.term-val { font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 600; color: var(--violet-lt); }
+.term-note { font-size: 9.5px; color: var(--muted); margin-top: 3px; line-height: 1.4; }
+
+.sig-block { display: grid; grid-template-columns: 1fr 1fr; gap: 6mm; background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 5mm; }
+.sig-side-label { font-size: 8px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--dim); margin-bottom: 4mm; }
+.sig-line { height: 1px; background: var(--border-2); margin-bottom: 3mm; }
+.sig-name { font-size: 11px; color: var(--muted); }
+.sig-date { font-size: 10px; color: var(--dim); margin-top: 2px; }
+.sig-name-prefill { font-size: 12px; font-weight: 600; color: var(--text); margin-bottom: 2mm; }
+
+.prop-footer { display: flex; align-items: center; justify-content: space-between; padding-top: 6mm; margin-top: auto; border-top: 1px solid var(--border); }
+.prop-footer-left { font-size: 9px; color: var(--dim); }
+.prop-footer-right { font-size: 9px; color: var(--dim); }
+.prop-footer-right span { font-family: 'JetBrains Mono', monospace; color: var(--violet-lt); }
+
+.print-bar { position: fixed; bottom: 20px; right: 20px; z-index: 999; display: flex; gap: 10px; }
+.print-btn { background: var(--grad); color: #fff; font-family: 'Inter', sans-serif; font-weight: 700; font-size: 13px; padding: 10px 22px; border: none; border-radius: 6px; cursor: pointer; transition: opacity 0.15s; box-shadow: 0 4px 20px rgba(99,102,241,0.4); }
+.print-btn:hover { opacity: 0.88; }
+.fill-guide { background: rgba(10,14,25,0.95); border: 1px solid var(--border-2); color: var(--muted); font-family: 'Inter', sans-serif; font-size: 12px; padding: 10px 16px; border-radius: 6px; }
+
+[data-field] { outline: none; border-bottom: 1px dashed rgba(139,92,246,0.4); cursor: text; transition: border-color 0.15s; display: inline-block; min-width: 20px; }
+[data-field]:focus { border-bottom-color: var(--violet); }
+[data-field].filled { border-bottom-color: transparent; }
+
+</style>
+</head>
+<body>
+
+<div class="print-bar no-print">
+  <div class="fill-guide">Fill the highlighted fields, then print to PDF</div>
+  <button class="print-btn" onclick="window.print()">Export PDF &rarr;</button>
+</div>
+
+<!-- PAGE 1 — COVER -->
+<div class="page" id="page-cover">
+  <div class="page-inner">
+    <div class="prop-header">
+      <div class="prop-header-logo"><img src="assets/logo.png" alt="Kinetra AI"></div>
+      <div class="prop-header-meta">
+        <div class="prop-label">Proposal Reference</div>
+        <div class="prop-ref" contenteditable="true" data-field="ref">KAI-2026-001</div>
+      </div>
+    </div>
+    <div class="cover-inner">
+      <div class="cover-top">
+        <div class="cover-for-label">Prepared for</div>
+        <div class="cover-client" contenteditable="true" data-field="client-name">[Client Company Name]</div>
+        <div class="cover-client-sub" contenteditable="true" data-field="client-sub">[Industry &middot; City, State]</div>
+        <div class="grad-rule"></div>
+        <div class="cover-title">AI Systems<br><span class="cover-title-accent" contenteditable="true" data-field="proposal-title">That Actually Run.</span></div>
+        <div class="cover-tagline" contenteditable="true" data-field="proposal-tagline">A fixed-scope engagement to automate [core workflow], deployed and operational within 30 days.</div>
+        <div class="cover-meta-grid">
+          <div class="cover-meta-item"><div class="cover-meta-label">Date</div><div class="cover-meta-val" contenteditable="true" data-field="date">2026-05-08</div></div>
+          <div class="cover-meta-item"><div class="cover-meta-label">Engagement Type</div><div class="cover-meta-val accent" contenteditable="true" data-field="eng-type">AI Implementation</div></div>
+          <div class="cover-meta-item"><div class="cover-meta-label">Delivery Target</div><div class="cover-meta-val accent" contenteditable="true" data-field="delivery">30 days</div></div>
+          <div class="cover-meta-item"><div class="cover-meta-label">Prepared by</div><div class="cover-meta-val">Tiran Moskovitch</div></div>
+          <div class="cover-meta-item"><div class="cover-meta-label">Contact</div><div class="cover-meta-val">kinetra@kinetra-ai.com</div></div>
+          <div class="cover-meta-item"><div class="cover-meta-label">Valid Until</div><div class="cover-meta-val" contenteditable="true" data-field="valid-until">2026-06-08</div></div>
+        </div>
+      </div>
+      <div class="cover-bottom">
+        <div class="cover-contact"><strong>Kinetra AI LLC</strong><br>kinetra@kinetra-ai.com &middot; kinetra-ai.com</div>
+        <div class="cover-badge"><div class="cover-badge-dot"></div>Confidential</div>
+      </div>
+    </div>
+  </div>
+  <div class="page-num">1 / 4</div>
+</div>
+
+<!-- PAGE 2 — SITUATION & SCOPE -->
+<div class="page" id="page-scope">
+  <div class="page-inner">
+    <div class="prop-header">
+      <div class="prop-header-logo"><img src="assets/logo.png" alt="Kinetra AI"></div>
+      <div class="prop-header-meta"><div class="prop-label">Proposal</div><div class="prop-ref" contenteditable="true" data-field="ref2">KAI-2026-001</div></div>
+    </div>
+    <div style="margin-bottom: 7mm;">
+      <div class="sec-eyebrow">01 — Situation</div>
+      <div class="sec-h2">What's costing you now.</div>
+      <div class="sec-sub" contenteditable="true" data-field="situation">[Client] currently handles [process] manually, requiring [X hours] per [week/month]. This creates bottlenecks at [specific point], delays [outcome], and prevents the team from focusing on [high-value work].</div>
+      <div class="situation-grid">
+        <div class="sit-card highlight"><div class="sit-card-label">Current State</div><div class="sit-card-val" contenteditable="true" data-field="current-state">[Describe the manual/broken process in 1-2 sentences.]</div></div>
+        <div class="sit-card highlight"><div class="sit-card-label">Business Impact</div><div class="sit-card-val" contenteditable="true" data-field="impact">[Quantify the cost: hours/week lost, errors per month, revenue delayed.]</div></div>
+        <div class="sit-card"><div class="sit-card-label">Root Cause</div><div class="sit-card-val" contenteditable="true" data-field="root-cause">[Why hasn't this been solved? Missing integration, data in silos, etc.]</div></div>
+        <div class="sit-card"><div class="sit-card-label">Why Now</div><div class="sit-card-val" contenteditable="true" data-field="why-now">[Triggering event: growth, new hire, compliance date, competitive pressure.]</div></div>
+      </div>
+    </div>
+    <div>
+      <div class="sec-eyebrow">02 — Scope</div>
+      <div class="sec-h2">What ships.</div>
+      <table class="scope-table">
+        <thead><tr><th style="width:24px;">#</th><th>Deliverable</th><th style="width:80px;">Ships</th></tr></thead>
+        <tbody>
+          <tr><td class="scope-num">01</td><td><div class="scope-item" contenteditable="true" data-field="d1-title">[Deliverable 1]</div><div class="scope-desc" contenteditable="true" data-field="d1-desc">[What it does, what it replaces, what stack it connects to.]</div><div class="scope-enables" contenteditable="true" data-field="d1-enables">Enables: [downstream outcome]</div></td><td class="scope-date" contenteditable="true" data-field="d1-date">Day 14</td></tr>
+          <tr><td class="scope-num">02</td><td><div class="scope-item" contenteditable="true" data-field="d2-title">[Deliverable 2]</div><div class="scope-desc" contenteditable="true" data-field="d2-desc">[What it does, what it replaces, what stack it connects to.]</div><div class="scope-enables" contenteditable="true" data-field="d2-enables">Enables: [downstream outcome]</div></td><td class="scope-date" contenteditable="true" data-field="d2-date">Day 21</td></tr>
+          <tr><td class="scope-num">03</td><td><div class="scope-item" contenteditable="true" data-field="d3-title">[Deliverable 3]</div><div class="scope-desc" contenteditable="true" data-field="d3-desc">[What it does, what it replaces, what stack it connects to.]</div><div class="scope-enables" contenteditable="true" data-field="d3-enables">Enables: [downstream outcome]</div></td><td class="scope-date" contenteditable="true" data-field="d3-date">Day 28</td></tr>
+          <tr><td class="scope-num">04</td><td><div class="scope-item" contenteditable="true" data-field="d4-title">[Deliverable 4 — Team Handoff + Runbook]</div><div class="scope-desc" contenteditable="true" data-field="d4-desc">Training session, operating runbook, and 30-day monitoring window. You can run it without us.</div><div class="scope-enables" contenteditable="true" data-field="d4-enables">Enables: Full operational independence at delivery</div></td><td class="scope-date" contenteditable="true" data-field="d4-date">Day 30</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="page-num">2 / 4</div>
+</div>
+
+<!-- PAGE 3 — TIMELINE -->
+<div class="page" id="page-timeline">
+  <div class="page-inner">
+    <div class="prop-header">
+      <div class="prop-header-logo"><img src="assets/logo.png" alt="Kinetra AI"></div>
+      <div class="prop-header-meta"><div class="prop-label">Proposal</div><div class="prop-ref" contenteditable="true" data-field="ref3">KAI-2026-001</div></div>
+    </div>
+    <div class="sec-eyebrow">03 — Timeline</div>
+    <div class="sec-h2">30 days. Four phases. One deliverable each.</div>
+    <div class="sec-sub">Every phase ends with something working. No phase ends with a slide deck.</div>
+    <div class="timeline-phases" style="margin-bottom: 5mm;">
+      <div class="tl-phase"><div class="tl-phase-head"><div class="tl-phase-week">Week 01 &middot; Days 1–7</div><div class="tl-phase-title">Discovery</div></div><div class="tl-phase-body"><div class="tl-task">System access and credential setup</div><div class="tl-task">Workflow mapping session with stakeholders</div><div class="tl-task">Data source audit and API verification</div><div class="tl-task">Spec lock — no scope changes after Day 7</div><div class="tl-deliverable">Delivers<span contenteditable="true" data-field="ph1-deliv">Confirmed spec document, locked scope</span></div></div></div>
+      <div class="tl-phase"><div class="tl-phase-head"><div class="tl-phase-week">Week 02 &middot; Days 8–14</div><div class="tl-phase-title" contenteditable="true" data-field="ph2-title">Build — Phase A</div></div><div class="tl-phase-body"><div class="tl-task" contenteditable="true" data-field="ph2-t1">[Core integration build]</div><div class="tl-task" contenteditable="true" data-field="ph2-t2">[Automation logic layer]</div><div class="tl-task" contenteditable="true" data-field="ph2-t3">[Unit testing against real data]</div><div class="tl-task">Daily async check-in via Slack/email</div><div class="tl-deliverable">Delivers<span contenteditable="true" data-field="ph2-deliv">Working integration, test results</span></div></div></div>
+      <div class="tl-phase"><div class="tl-phase-head"><div class="tl-phase-week">Week 03 &middot; Days 15–21</div><div class="tl-phase-title" contenteditable="true" data-field="ph3-title">Build — Phase B</div></div><div class="tl-phase-body"><div class="tl-task" contenteditable="true" data-field="ph3-t1">[Second system layer]</div><div class="tl-task" contenteditable="true" data-field="ph3-t2">[Dashboard / reporting build]</div><div class="tl-task" contenteditable="true" data-field="ph3-t3">[End-to-end workflow test]</div><div class="tl-task">Client review session — adjustments within scope</div><div class="tl-deliverable">Delivers<span contenteditable="true" data-field="ph3-deliv">Full system operational on staging</span></div></div></div>
+      <div class="tl-phase"><div class="tl-phase-head"><div class="tl-phase-week">Week 04 &middot; Days 22–30</div><div class="tl-phase-title">Deploy &amp; Handoff</div></div><div class="tl-phase-body"><div class="tl-task">Production deployment and smoke test</div><div class="tl-task">Team training session (recorded)</div><div class="tl-task">Runbook and documentation delivery</div><div class="tl-task">30-day monitoring window begins</div><div class="tl-deliverable">Delivers<span>Live system + full handoff package</span></div></div></div>
+    </div>
+    <div class="milestone-track">
+      <div style="font-size:8.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--dim);margin-bottom:3mm;">Key Milestones</div>
+      <div class="milestone-row"><div class="milestone-dot done"></div><div class="milestone-label">Proposal accepted — engagement starts</div><div class="milestone-date" contenteditable="true" data-field="ms1-date">Day 0</div></div>
+      <div class="milestone-row"><div class="milestone-dot"></div><div class="milestone-label">Spec locked — no scope changes after this date</div><div class="milestone-date" contenteditable="true" data-field="ms2-date">Day 7</div></div>
+      <div class="milestone-row"><div class="milestone-dot"></div><div class="milestone-label" contenteditable="true" data-field="ms3-label">Deliverable 1 shipped and accepted</div><div class="milestone-date" contenteditable="true" data-field="ms3-date">Day 14</div></div>
+      <div class="milestone-row"><div class="milestone-dot"></div><div class="milestone-label" contenteditable="true" data-field="ms4-label">Deliverable 2 + 3 shipped and accepted</div><div class="milestone-date" contenteditable="true" data-field="ms4-date">Day 21</div></div>
+      <div class="milestone-row"><div class="milestone-dot"></div><div class="milestone-label">Production launch + team training complete</div><div class="milestone-date" contenteditable="true" data-field="ms5-date">Day 30</div></div>
+    </div>
+    <div style="background:rgba(248,113,113,0.05);border:1px solid rgba(248,113,113,0.15);border-radius:6px;padding:4mm 5mm;">
+      <div style="font-size:8.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:rgba(248,113,113,0.7);margin-bottom:4px;">Out of Scope</div>
+      <div style="font-size:10.5px;color:var(--muted);line-height:1.6;" contenteditable="true" data-field="out-of-scope">Infrastructure migration &middot; Custom model training &middot; Mobile application development &middot; Ongoing support beyond the 30-day monitoring window &middot; Any system not listed under Scope on Page 2.</div>
+    </div>
+  </div>
+  <div class="page-num">3 / 4</div>
+</div>
+
+<!-- PAGE 4 — INVESTMENT & SIGN -->
+<div class="page" id="page-invest">
+  <div class="page-inner">
+    <div class="prop-header">
+      <div class="prop-header-logo"><img src="assets/logo.png" alt="Kinetra AI"></div>
+      <div class="prop-header-meta"><div class="prop-label">Proposal</div><div class="prop-ref" contenteditable="true" data-field="ref4">KAI-2026-001</div></div>
+    </div>
+    <div class="sec-eyebrow">04 — Investment</div>
+    <div class="sec-h2">One number. No surprises.</div>
+    <div class="invest-card">
+      <div class="invest-card-head">
+        <div class="invest-head-left">
+          <div class="invest-type" contenteditable="true" data-field="invest-type">Fixed-Price &middot; AI Implementation Engagement</div>
+          <div class="invest-amount" contenteditable="true" data-field="invest-amount">$[AMOUNT]</div>
+          <div class="invest-amount-note">Total fixed price. No hourly billing. No overages.</div>
+        </div>
+        <div class="invest-head-right">
+          <div class="invest-guarantee"><div class="invest-guarantee-label">Delivery Guarantee</div><div class="invest-guarantee-val">Live in 30 days<br>or deposit refunded.</div></div>
+        </div>
+      </div>
+      <div class="invest-card-body">
+        <div class="invest-col">
+          <div class="invest-col-label">What's included</div>
+          <div class="invest-row"><div class="invest-row-label">Discovery &amp; spec lock</div><div class="invest-row-val">Included</div></div>
+          <div class="invest-row"><div class="invest-row-label" contenteditable="true" data-field="inc1">All 4 deliverables (scoped above)</div><div class="invest-row-val">Included</div></div>
+          <div class="invest-row"><div class="invest-row-label">Team training (recorded session)</div><div class="invest-row-val">Included</div></div>
+          <div class="invest-row"><div class="invest-row-label">Runbook &amp; documentation</div><div class="invest-row-val">Included</div></div>
+          <div class="invest-row"><div class="invest-row-label">30-day post-launch monitoring</div><div class="invest-row-val">Included</div></div>
+          <div class="invest-row"><div class="invest-row-label">IP &amp; source code transfer</div><div class="invest-row-val">Included</div></div>
+        </div>
+        <div class="invest-col">
+          <div class="invest-col-label">Payment schedule</div>
+          <div class="invest-row"><div class="invest-row-label">Deposit (on signature)</div><div class="invest-row-val" contenteditable="true" data-field="pay1">50%</div></div>
+          <div class="invest-row"><div class="invest-row-label">Milestone 2 (Day 14)</div><div class="invest-row-val" contenteditable="true" data-field="pay2">25%</div></div>
+          <div class="invest-row"><div class="invest-row-label">Final (production launch)</div><div class="invest-row-val" contenteditable="true" data-field="pay3">25%</div></div>
+          <div class="invest-row" style="margin-top:3mm;padding-top:3mm;border-top:1px solid var(--border);"><div class="invest-row-label" style="color:var(--dim);font-size:10px;">Method</div><div class="invest-row-val" style="font-size:10px;color:var(--muted);" contenteditable="true" data-field="pay-method">Wire / ACH / Zelle</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="terms-grid" style="margin-bottom:4mm;">
+      <div class="term-item"><div class="term-label">Proposal Valid</div><div class="term-val" contenteditable="true" data-field="t-valid">30 days</div><div class="term-note">From date above. Price subject to change after expiry.</div></div>
+      <div class="term-item"><div class="term-label">Change Requests</div><div class="term-val">Out of scope</div><div class="term-note">New scope is quoted separately. Core scope is fixed at Day 7.</div></div>
+      <div class="term-item"><div class="term-label">IP Ownership</div><div class="term-val">Client</div><div class="term-note">All deliverables transfer to client on final payment.</div></div>
+    </div>
+    <div class="sig-block">
+      <div><div class="sig-side-label">Kinetra AI LLC</div><div class="sig-name-prefill">Tiran Moskovitch</div><div class="sig-line"></div><div class="sig-name">Signature</div><div class="sig-date" contenteditable="true" data-field="sig-date">Date: ___________</div></div>
+      <div><div class="sig-side-label">Client</div><div class="sig-name-prefill" contenteditable="true" data-field="sig-client-name">[Client Name]</div><div class="sig-line"></div><div class="sig-name">Signature</div><div class="sig-date">Date: ___________</div></div>
+    </div>
+    <div class="prop-footer">
+      <div class="prop-footer-left">Kinetra AI LLC &middot; kinetra@kinetra-ai.com &middot; kinetra-ai.com</div>
+      <div class="prop-footer-right">Proposal <span contenteditable="true" data-field="ref5">KAI-2026-001</span> &middot; Confidential</div>
+    </div>
+  </div>
+  <div class="page-num">4 / 4</div>
+</div>
+
+<script>
+const refFields = ['ref', 'ref2', 'ref3', 'ref4', 'ref5'];
+document.querySelector('[data-field="ref"]').addEventListener('input', function() {
+  const val = this.textContent;
+  refFields.slice(1).forEach(id => {
+    const el = document.querySelector(`[data-field="${id}"]`);
+    if (el) el.textContent = val;
+  });
+});
+document.querySelectorAll('[data-field]').forEach(el => {
+  el.addEventListener('input', function() {
+    this.classList.toggle('filled', this.textContent.trim().length > 0);
+  });
+  el.addEventListener('focus', function() {
+    if (this.textContent.startsWith('[')) {
+      const range = document.createRange();
+      range.selectNodeContents(this);
+      window.getSelection().removeAllRanges();
+      window.getSelection().addRange(range);
+    }
+  });
+});
+window.addEventListener('beforeprint', () => { document.querySelector('.print-bar').style.display = 'none'; });
+window.addEventListener('afterprint', () => { document.querySelector('.print-bar').style.display = 'flex'; });
+</script>
+</body>
+</html>
