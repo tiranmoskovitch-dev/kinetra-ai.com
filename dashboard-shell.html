@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Client Dashboard — Kinetra AI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+
+:root {
+  --bg:           #090D18;
+  --surface:      #10141F;
+  --surface-2:    #141926;
+  --surface-deep: #0D1117;
+  --border:       #1C2333;
+  --border-2:     #2A3347;
+  --text:         #E8EEFF;
+  --text-sub:     #BDC7E0;
+  --muted:        #8892AA;
+  --dim:          #4E5A72;
+  --accent:       #8B5CF6;
+  --accent-2:     #6366F1;
+  --accent-dim:   rgba(139, 92, 246, 0.08);
+  --accent-br:    rgba(139, 92, 246, 0.22);
+  --accent-grad:  linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%);
+  --live:         #10B981;
+  --live-dim:     rgba(16, 185, 129, 0.1);
+  --live-br:      rgba(16, 185, 129, 0.25);
+  --warning:      #F59E0B;
+  --warning-dim:  rgba(245, 158, 11, 0.1);
+  --error:        #F87171;
+  --error-dim:    rgba(248, 113, 113, 0.1);
+  --idle:         #374151;
+  --sidebar-w:    200px;
+  --header-h:     52px;
+  --radius-sm:    4px;
+  --radius:       6px;
+  --radius-md:    8px;
+  --radius-lg:    10px;
+  --font-ui:      'Inter', system-ui, sans-serif;
+  --font-mono:    'JetBrains Mono', monospace;
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { height: 100%; font-size: 16px; }
+body {
+  height: 100%;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-ui);
+  -webkit-font-smoothing: antialiased;
+  overflow: hidden;
+}
+a { text-decoration: none; color: inherit; }
+button { cursor: pointer; font-family: inherit; border: none; background: none; }
+
+.shell {
+  display: grid;
+  grid-template-columns: var(--sidebar-w) 1fr;
+  grid-template-rows: var(--header-h) 1fr;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.sidebar {
+  grid-column: 1;
+  grid-row: 1 / 3;
+  background: var(--surface-deep);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+.sidebar-brand {
+  padding: 18px 16px 14px;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+.sidebar-brand img { height: 28px; width: auto; }
+.sidebar-brand-text { display: flex; flex-direction: column; }
+.sidebar-brand-name { font-size: 14px; font-weight: 700; color: var(--text); line-height: 1.2; }
+.sidebar-brand-sub { font-size: 11px; color: var(--muted); margin-top: 1px; }
+.sidebar-nav { flex: 1; padding: 8px 0; }
+.nav-section-label { font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--dim); padding: 12px 16px 4px; }
+.nav-link { display: flex; align-items: center; gap: 10px; padding: 8px 16px; font-size: 13px; font-weight: 500; color: var(--muted); border-radius: 0; transition: background 0.15s, color 0.15s; cursor: pointer; position: relative; }
+.nav-link:hover { background: rgba(255,255,255,0.04); color: var(--text-sub); }
+.nav-link.active { background: var(--accent-dim); color: var(--text); }
+.nav-link.active::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 2px; background: var(--accent-grad); border-radius: 0 2px 2px 0; }
+.nav-link svg { flex-shrink: 0; width: 16px; height: 16px; opacity: 0.7; }
+.nav-link.active svg { opacity: 1; }
+.nav-badge { margin-left: auto; font-size: 10px; font-weight: 600; font-family: var(--font-mono); background: var(--accent-dim); color: var(--accent); border: 1px solid var(--accent-br); border-radius: var(--radius-sm); padding: 1px 5px; }
+.nav-badge.warn { background: var(--warning-dim); color: var(--warning); border-color: rgba(245,158,11,0.3); }
+.sidebar-footer { padding: 12px 16px; border-top: 1px solid var(--border); flex-shrink: 0; }
+.powered-by { font-size: 10px; color: var(--dim); letter-spacing: 0.04em; }
+.powered-by span { background: var(--accent-grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-weight: 600; }
+
+.header { grid-column: 2; grid-row: 1; background: var(--surface-deep); border-bottom: 1px solid var(--border); display: flex; align-items: center; padding: 0 24px; gap: 16px; }
+.header-title-wrap { flex: 1; }
+.header-title { font-size: 14px; font-weight: 600; color: var(--text); }
+.header-breadcrumb { font-size: 11px; color: var(--dim); margin-top: 1px; }
+.header-status { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--muted); }
+.status-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+.status-dot.live { background: var(--live); box-shadow: 0 0 0 2px var(--live-dim); animation: pulse 2s infinite; }
+.status-dot.warning { background: var(--warning); }
+.status-dot.error   { background: var(--error); }
+.status-dot.idle    { background: var(--idle); }
+@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+.header-clock { font-size: 12px; font-family: var(--font-mono); color: var(--muted); min-width: 60px; text-align: right; }
+.header-divider { width: 1px; height: 20px; background: var(--border); }
+.header-user { display: flex; align-items: center; gap: 8px; padding: 4px 8px; border-radius: var(--radius); cursor: pointer; transition: background 0.15s; }
+.header-user:hover { background: rgba(255,255,255,0.04); }
+.user-avatar { width: 28px; height: 28px; border-radius: 50%; background: var(--accent-grad); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: #fff; flex-shrink: 0; }
+.user-name { font-size: 12px; font-weight: 500; color: var(--text-sub); }
+.header-btn { display: flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 12px; font-weight: 500; color: var(--muted); border: 1px solid var(--border); border-radius: var(--radius); background: transparent; transition: border-color 0.15s, color 0.15s; }
+.header-btn:hover { border-color: var(--border-2); color: var(--text-sub); }
+
+.main { grid-column: 2; grid-row: 2; overflow-y: auto; overflow-x: hidden; }
+.page { display: none; padding: 24px; min-height: 100%; }
+.page.active { display: block; }
+
+.kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
+.kpi-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 18px 20px; transition: border-color 0.15s; }
+.kpi-card:hover { border-color: var(--border-2); }
+.kpi-label { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--dim); margin-bottom: 10px; }
+.kpi-value { font-size: 32px; font-weight: 600; font-family: var(--font-mono); color: var(--text); line-height: 1; letter-spacing: -0.02em; }
+.kpi-value.live-val { color: var(--live); }
+.kpi-value.error-val { color: var(--error); }
+.kpi-delta { font-size: 12px; font-family: var(--font-mono); margin-top: 6px; color: var(--muted); }
+.kpi-delta .up   { color: var(--live); }
+.kpi-delta .down { color: var(--error); }
+
+.content-row { display: grid; grid-template-columns: 1fr 320px; gap: 16px; margin-bottom: 24px; }
+.content-row.full { grid-template-columns: 1fr; }
+
+.panel { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; }
+.panel-header { display: flex; align-items: center; justify-content: space-between; padding: 14px 20px; border-bottom: 1px solid var(--border); }
+.panel-title { font-size: 13px; font-weight: 600; color: var(--text); }
+.panel-meta { font-size: 11px; color: var(--dim); }
+.panel-body { padding: 16px 20px; }
+
+.chart-wrap { position: relative; height: 180px; display: flex; align-items: center; justify-content: center; }
+.chart-canvas { width: 100%; height: 100%; display: block; }
+.chart-empty { text-align: center; }
+.chart-empty-icon { width: 40px; height: 40px; margin: 0 auto 10px; opacity: 0.2; }
+.chart-empty-text { font-size: 13px; color: var(--dim); }
+.chart-empty-sub { font-size: 11px; color: var(--dim); margin-top: 3px; opacity: 0.7; }
+
+.table-tabs { display: flex; gap: 0; border-bottom: 1px solid var(--border); }
+.table-tab { padding: 10px 16px; font-size: 12px; font-weight: 500; color: var(--muted); border-bottom: 2px solid transparent; cursor: pointer; transition: color 0.15s, border-color 0.15s; background: none; }
+.table-tab:hover { color: var(--text-sub); }
+.table-tab.active { color: var(--text); border-bottom-color: var(--accent); }
+
+.table-filter { display: flex; align-items: center; gap: 8px; padding: 8px 16px; border-bottom: 1px solid var(--border); background: var(--surface-2); }
+.filter-input { flex: 1; font-size: 12px; font-family: var(--font-ui); color: var(--text); background: var(--surface-deep); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 5px 10px; outline: none; transition: border-color 0.15s; }
+.filter-input::placeholder { color: var(--dim); }
+.filter-input:focus { border-color: var(--accent-br); }
+.filter-label { font-size: 11px; color: var(--dim); }
+
+.data-table { width: 100%; border-collapse: collapse; }
+.data-table th { font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--dim); padding: 8px 16px; text-align: left; border-bottom: 1px solid var(--border); background: var(--surface-2); }
+.data-table td { font-size: 12px; color: var(--text-sub); padding: 9px 16px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+.data-table tr:last-child td { border-bottom: none; }
+.data-table tr:nth-child(even) td { background: rgba(255,255,255,0.01); }
+.data-table .mono { font-family: var(--font-mono); font-size: 11px; }
+.data-table .empty-row td { text-align: center; color: var(--dim); padding: 24px; font-style: italic; }
+
+.tag { display: inline-flex; align-items: center; gap: 4px; font-size: 10px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; border-radius: var(--radius-sm); padding: 2px 6px; }
+.tag.live    { background: var(--live-dim); color: var(--live); border: 1px solid var(--live-br); }
+.tag.warn    { background: var(--warning-dim); color: var(--warning); border: 1px solid rgba(245,158,11,0.3); }
+.tag.error   { background: var(--error-dim); color: var(--error); border: 1px solid rgba(248,113,113,0.3); }
+.tag.neutral { background: rgba(255,255,255,0.04); color: var(--muted); border: 1px solid var(--border); }
+
+.health-row { display: flex; align-items: center; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--border); }
+.health-row:last-child { border-bottom: none; }
+.health-name { font-size: 12px; color: var(--text-sub); display: flex; align-items: center; gap: 7px; }
+.health-val { font-size: 12px; font-family: var(--font-mono); color: var(--muted); }
+
+.coverage-item { margin-bottom: 12px; }
+.coverage-item:last-child { margin-bottom: 0; }
+.coverage-header { display: flex; justify-content: space-between; margin-bottom: 5px; }
+.coverage-name { font-size: 12px; color: var(--text-sub); }
+.coverage-pct { font-size: 12px; font-family: var(--font-mono); color: var(--muted); }
+.coverage-bar { height: 4px; background: var(--surface-deep); border-radius: 2px; overflow: hidden; }
+.coverage-fill { height: 100%; background: var(--accent-grad); border-radius: 2px; transition: width 0.6s ease; }
+.coverage-fill.warn { background: var(--warning); }
+
+.log-wrap { font-family: var(--font-mono); font-size: 11px; line-height: 1.7; max-height: 140px; overflow-y: auto; }
+.log-wrap::-webkit-scrollbar { width: 4px; }
+.log-wrap::-webkit-scrollbar-track { background: transparent; }
+.log-wrap::-webkit-scrollbar-thumb { background: var(--border-2); border-radius: 2px; }
+.log-line { display: flex; gap: 8px; color: var(--muted); padding: 1px 0; }
+.log-time { color: var(--dim); flex-shrink: 0; min-width: 52px; }
+.log-level-ok   { color: var(--live); }
+.log-level-warn { color: var(--warning); }
+.log-level-err  { color: var(--error); }
+.log-msg        { color: var(--text-sub); }
+.log-empty { font-size: 11px; color: var(--dim); padding: 12px 0; text-align: center; }
+
+.empty-state { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 320px; text-align: center; }
+.empty-state-icon { width: 48px; height: 48px; margin-bottom: 16px; opacity: 0.18; }
+.empty-state-title { font-size: 15px; font-weight: 600; color: var(--text-sub); margin-bottom: 6px; }
+.empty-state-sub { font-size: 13px; color: var(--dim); max-width: 280px; line-height: 1.6; }
+
+.main::-webkit-scrollbar { width: 5px; }
+.main::-webkit-scrollbar-track { background: transparent; }
+.main::-webkit-scrollbar-thumb { background: var(--border-2); border-radius: 3px; }
+
+</style>
+</head>
+<body>
+
+<script>
+const CLIENT_CONFIG = {
+  client_name:   "Acme Property Management",
+  logo_url:      "",
+  accent_color:  "",
+  accent_color2: "",
+  domain:        "",
+  user_name:     "Admin",
+  user_initials: "A",
+  powered_by:    true,
+};
+<\/script>
+
+<div class="shell">
+
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <div class="sidebar-brand-text">
+        <span class="sidebar-brand-name" id="sidebar-client-name">Loading...</span>
+        <span class="sidebar-brand-sub">AI Operations</span>
+      </div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section-label">Overview</div>
+      <div class="nav-link active" data-page="overview">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+        Dashboard
+      </div>
+      <div class="nav-link" data-page="activity">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        Activity
+      </div>
+      <div class="nav-section-label">Automation</div>
+      <div class="nav-link" data-page="workflows">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+        Workflows
+        <span class="nav-badge" id="badge-workflows">--</span>
+      </div>
+      <div class="nav-link" data-page="models">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+        AI Models
+      </div>
+      <div class="nav-link" data-page="integrations">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12H2"/><path d="M22 12h-3"/><rect x="9" y="7" width="6" height="10" rx="1"/><path d="M9 9H5v6h4"/><path d="M15 9h4v6h-4"/></svg>
+        Integrations
+        <span class="nav-badge warn" id="badge-integrations">--</span>
+      </div>
+      <div class="nav-section-label">Data</div>
+      <div class="nav-link" data-page="reports">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/><line x1="2" y1="20" x2="22" y2="20"/></svg>
+        Reports
+      </div>
+      <div class="nav-link" data-page="logs">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
+        Logs
+      </div>
+      <div class="nav-section-label">Admin</div>
+      <div class="nav-link" data-page="settings">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        Settings
+      </div>
+    </nav>
+    <div class="sidebar-footer" id="powered-by-footer">
+      <div class="powered-by">Powered by <span>Kinetra AI</span></div>
+    </div>
+  </aside>
+
+  <header class="header">
+    <div class="header-title-wrap">
+      <div class="header-title" id="header-page-title">Dashboard</div>
+      <div class="header-breadcrumb" id="header-breadcrumb"></div>
+    </div>
+    <div class="header-status">
+      <span class="status-dot live" id="system-status-dot"></span>
+      <span id="system-status-text">System live</span>
+    </div>
+    <div class="header-divider"></div>
+    <div class="header-clock" id="header-clock">--:--</div>
+    <button class="header-btn" id="refresh-btn" title="Refresh data">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+      Refresh
+    </button>
+    <div class="header-divider"></div>
+    <div class="header-user">
+      <div class="user-avatar" id="user-avatar">A</div>
+      <span class="user-name" id="user-name">Admin</span>
+    </div>
+  </header>
+
+  <main class="main">
+
+    <div class="page active" id="page-overview">
+      <div class="kpi-grid">
+        <div class="kpi-card"><div class="kpi-label">Workflows Active</div><div class="kpi-value" id="kpi-workflows">--</div><div class="kpi-delta" id="kpi-workflows-delta">&nbsp;</div></div>
+        <div class="kpi-card"><div class="kpi-label">Tasks Automated Today</div><div class="kpi-value" id="kpi-tasks">--</div><div class="kpi-delta" id="kpi-tasks-delta">&nbsp;</div></div>
+        <div class="kpi-card"><div class="kpi-label">System Uptime</div><div class="kpi-value live-val" id="kpi-uptime">--</div><div class="kpi-delta" id="kpi-uptime-delta">&nbsp;</div></div>
+        <div class="kpi-card"><div class="kpi-label">Errors (24h)</div><div class="kpi-value" id="kpi-errors">--</div><div class="kpi-delta" id="kpi-errors-delta">&nbsp;</div></div>
+      </div>
+      <div class="content-row">
+        <div class="panel">
+          <div class="panel-header"><span class="panel-title">Automation Activity</span><span class="panel-meta" id="chart-range">Last 7 days</span></div>
+          <div class="panel-body">
+            <div class="chart-wrap">
+              <canvas class="chart-canvas" id="activity-chart" style="display:none;"></canvas>
+              <div class="chart-empty" id="chart-empty-state">
+                <svg class="chart-empty-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="6" y="30" width="8" height="12" rx="1"/><rect x="20" y="20" width="8" height="22" rx="1"/><rect x="34" y="10" width="8" height="32" rx="1"/></svg>
+                <div class="chart-empty-text">No activity data yet</div>
+                <div class="chart-empty-sub">Data will appear once workflows are running</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:16px;">
+          <div class="panel">
+            <div class="panel-header"><span class="panel-title">System Health</span></div>
+            <div class="panel-body">
+              <div class="health-row"><span class="health-name"><span class="status-dot idle"></span>API Connection</span><span class="health-val">--</span></div>
+              <div class="health-row"><span class="health-name"><span class="status-dot idle"></span>Data Sync</span><span class="health-val">--</span></div>
+              <div class="health-row"><span class="health-name"><span class="status-dot idle"></span>AI Engine</span><span class="health-val">--</span></div>
+              <div class="health-row"><span class="health-name"><span class="status-dot idle"></span>Scheduler</span><span class="health-val">--</span></div>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="panel-header"><span class="panel-title">Automation Coverage</span></div>
+            <div class="panel-body">
+              <div class="coverage-item"><div class="coverage-header"><span class="coverage-name">Email Routing</span><span class="coverage-pct">--</span></div><div class="coverage-bar"><div class="coverage-fill" style="width:0%"></div></div></div>
+              <div class="coverage-item"><div class="coverage-header"><span class="coverage-name">Document Processing</span><span class="coverage-pct">--</span></div><div class="coverage-bar"><div class="coverage-fill" style="width:0%"></div></div></div>
+              <div class="coverage-item"><div class="coverage-header"><span class="coverage-name">Reporting</span><span class="coverage-pct">--</span></div><div class="coverage-bar"><div class="coverage-fill" style="width:0%"></div></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="panel" style="margin-bottom:24px;">
+        <div class="table-tabs" id="activity-tabs">
+          <button class="table-tab active" data-tab="all">All Events</button>
+          <button class="table-tab" data-tab="workflows">Workflows</button>
+          <button class="table-tab" data-tab="errors">Errors</button>
+        </div>
+        <div class="table-filter">
+          <input class="filter-input" type="text" placeholder="Filter events..." id="table-filter-input">
+          <span class="filter-label" id="table-filter-count">-- events</span>
+        </div>
+        <table class="data-table" id="activity-table">
+          <thead><tr><th>Time</th><th>Event</th><th>Source</th><th>Status</th><th>Duration</th></tr></thead>
+          <tbody id="activity-tbody"><tr class="empty-row"><td colspan="5">No events recorded yet</td></tr></tbody>
+        </table>
+      </div>
+      <div class="panel">
+        <div class="panel-header"><span class="panel-title">Live Log</span><span class="panel-meta"><span class="status-dot live" style="display:inline-block; margin-right:4px;"></span>Streaming</span></div>
+        <div class="panel-body"><div class="log-wrap" id="live-log"><div class="log-empty">No log entries yet — system idle</div></div></div>
+      </div>
+    </div>
+
+    <div class="page" id="page-activity"><div class="empty-state"><svg class="empty-state-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="8 34 20 22 8 10"/><line x1="24" y1="38" x2="40" y2="38"/></svg><div class="empty-state-title">Activity feed</div><div class="empty-state-sub">Full event history with filtering, export, and drill-down. Connect data sources to populate.</div></div></div>
+    <div class="page" id="page-workflows"><div class="empty-state"><svg class="empty-state-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="36" cy="10" r="6"/><circle cx="12" cy="24" r="6"/><circle cx="36" cy="38" r="6"/><line x1="17.7" y1="27" x2="30.3" y2="34.98"/><line x1="30.3" y1="13.02" x2="17.7" y2="21"/></svg><div class="empty-state-title">Workflows</div><div class="empty-state-sub">Manage your automation workflows — enable, pause, edit triggers, and view run history.</div></div></div>
+    <div class="page" id="page-models"><div class="empty-state"><svg class="empty-state-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M24 4L4 14l20 10 20-10L24 4z"/><path d="M4 34l20 10 20-10"/><path d="M4 24l20 10 20-10"/></svg><div class="empty-state-title">AI Models</div><div class="empty-state-sub">View deployed models, performance metrics, and usage. Model registry connects here.</div></div></div>
+    <div class="page" id="page-integrations"><div class="empty-state"><svg class="empty-state-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="18" y="14" width="12" height="20" rx="2"/><path d="M10 18H6v12h4"/><path d="M38 18h4v12h-4"/><line x1="10" y1="24" x2="18" y2="24"/><line x1="30" y1="24" x2="38" y2="24"/></svg><div class="empty-state-title">Integrations</div><div class="empty-state-sub">API connections, webhooks, and third-party service status. Configure in settings.</div></div></div>
+    <div class="page" id="page-reports"><div class="empty-state"><svg class="empty-state-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="36" y1="40" x2="36" y2="20"/><line x1="24" y1="40" x2="24" y2="8"/><line x1="12" y1="40" x2="12" y2="28"/><line x1="4" y1="40" x2="44" y2="40"/></svg><div class="empty-state-title">Reports</div><div class="empty-state-sub">Scheduled and on-demand reports. Export to PDF or CSV. Connect data pipeline to enable.</div></div></div>
+    <div class="page" id="page-logs"><div class="empty-state"><svg class="empty-state-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="8 34 20 22 8 10"/><line x1="24" y1="38" x2="40" y2="38"/></svg><div class="empty-state-title">System logs</div><div class="empty-state-sub">Full structured log stream with level filtering, search, and time range selection.</div></div></div>
+    <div class="page" id="page-settings"><div class="empty-state"><svg class="empty-state-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="24" cy="24" r="6"/><path d="M38.8 30a2 2 0 0 0 .4 2.2l.1.1a2.4 2.4 0 1 1-3.4 3.4l-.1-.1a2 2 0 0 0-2.2-.4 2 2 0 0 0-1.2 1.8V38a2.4 2.4 0 1 1-4.8 0v-.1a2 2 0 0 0-1.3-1.8 2 2 0 0 0-2.2.4l-.1.1a2.4 2.4 0 1 1-3.4-3.4l.1-.1a2 2 0 0 0 .4-2.2 2 2 0 0 0-1.8-1.2H10a2.4 2.4 0 1 1 0-4.8h.1a2 2 0 0 0 1.8-1.3 2 2 0 0 0-.4-2.2l-.1-.1a2.4 2.4 0 1 1 3.4-3.4l.1.1a2 2 0 0 0 2.2.4h.1a2 2 0 0 0 1.2-1.8V10a2.4 2.4 0 1 1 4.8 0v.1a2 2 0 0 0 1.2 1.8 2 2 0 0 0 2.2-.4l.1-.1a2.4 2.4 0 1 1 3.4 3.4l-.1.1a2 2 0 0 0-.4 2.2v.1a2 2 0 0 0 1.8 1.2H38a2.4 2.4 0 1 1 0 4.8h-.1a2 2 0 0 0-1.8 1.2z"/></svg><div class="empty-state-title">Settings</div><div class="empty-state-sub">White-label config, user management, API keys, and notification preferences.</div></div></div>
+
+  </main>
+
+</div>
+
+<script>
+(function applyWhiteLabel() {
+  const cfg = CLIENT_CONFIG;
+  const root = document.documentElement;
+  if (cfg.accent_color) {
+    root.style.setProperty('--accent', cfg.accent_color);
+    const hex = cfg.accent_color.replace('#', '');
+    const r = parseInt(hex.slice(0,2),16), g = parseInt(hex.slice(2,4),16), b = parseInt(hex.slice(4,6),16);
+    root.style.setProperty('--accent-dim', `rgba(${r},${g},${b},0.08)`);
+    root.style.setProperty('--accent-br',  `rgba(${r},${g},${b},0.22)`);
+    const c2 = cfg.accent_color2 || cfg.accent_color;
+    root.style.setProperty('--accent-grad', `linear-gradient(135deg, ${cfg.accent_color} 0%, ${c2} 100%)`);
+  }
+  const nameEl = document.getElementById('sidebar-client-name');
+  if (nameEl) nameEl.textContent = cfg.client_name || 'Client Portal';
+  document.title = `Dashboard — ${cfg.client_name || 'Kinetra AI'}`;
+  const avatarEl = document.getElementById('user-avatar');
+  const nameSpan = document.getElementById('user-name');
+  if (avatarEl) avatarEl.textContent = cfg.user_initials || 'A';
+  if (nameSpan) nameSpan.textContent = cfg.user_name || 'Admin';
+  const footer = document.getElementById('powered-by-footer');
+  if (footer && !cfg.powered_by) footer.style.display = 'none';
+})();
+
+const PAGE_TITLES = {
+  overview:     ['Dashboard',     CLIENT_CONFIG.client_name],
+  activity:     ['Activity',      'Event history'],
+  workflows:    ['Workflows',     'Automation engine'],
+  models:       ['AI Models',     'Model registry'],
+  integrations: ['Integrations',  'Connected services'],
+  reports:      ['Reports',       'Analytics & exports'],
+  logs:         ['Logs',          'System log stream'],
+  settings:     ['Settings',      'Configuration'],
+};
+
+function navigate(pageId) {
+  document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  const link = document.querySelector(`.nav-link[data-page="${pageId}"]`);
+  const page = document.getElementById(`page-${pageId}`);
+  if (link) link.classList.add('active');
+  if (page) page.classList.add('active');
+  const titles = PAGE_TITLES[pageId] || [pageId, ''];
+  const titleEl = document.getElementById('header-page-title');
+  const crumbEl = document.getElementById('header-breadcrumb');
+  if (titleEl) titleEl.textContent = titles[0];
+  if (crumbEl) crumbEl.textContent = titles[1] || '';
+}
+
+document.querySelectorAll('.nav-link[data-page]').forEach(link => {
+  link.addEventListener('click', () => navigate(link.dataset.page));
+});
+
+function updateClock() {
+  const el = document.getElementById('header-clock');
+  if (!el) return;
+  el.textContent = new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false });
+}
+updateClock();
+setInterval(updateClock, 1000);
+
+document.querySelectorAll('.table-tab').forEach(tab => {
+  tab.addEventListener('click', function() {
+    document.querySelectorAll('.table-tab').forEach(t => t.classList.remove('active'));
+    this.classList.add('active');
+  });
+});
+
+document.getElementById('refresh-btn').addEventListener('click', function() {
+  const svg = this.querySelector('svg');
+  if (svg) {
+    svg.style.transition = 'transform 0.5s ease';
+    svg.style.transform = 'rotate(360deg)';
+    setTimeout(() => { svg.style.transition = ''; svg.style.transform = ''; }, 500);
+  }
+});
+<\/script>
+
+</body>
+</html>
